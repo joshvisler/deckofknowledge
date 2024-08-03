@@ -1,0 +1,21 @@
+name: cards_repository
+description: "A new Flutter package project."
+version: 0.0.1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cards_api:
+    path: ../cards_api
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  mocktail: ^1.0.4
+
+flutter:

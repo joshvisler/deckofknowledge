@@ -1,0 +1,112 @@
+{
+  "@@locale": "en",
+  "cardDetailsAppBarTitle": "card Details",
+  "@cardDetailsAppBarTitle": {
+    "description": "Title text shown in the AppBar of the card Details Page"
+  },
+  "cardDetailsDeleteButtonTooltip": "Delete",
+  "@cardDetailsDeleteButtonTooltip": {
+    "description": "Tooltip text shown in the delete button on the card Details Page"
+  },
+  "cardDetailsEditButtonTooltip": "Edit",
+  "@cardDetailsEditButtonTooltip": {
+    "description": "Tooltip text shown in the edit button on the card Details Page"
+  },
+  "cardsOverviewAppBarTitle": "Flutter cards",
+  "@cardsOverviewAppBarTitle": {
+    "description": "Title text shown in the AppBar of the cards Overview Page"
+  },
+  "cardsOverviewcardDeletedSnackbarText": "card \"{cardTitle}\" deleted.",
+  "@cardsOverviewcardDeletedSnackbarText": {
+    "description": "Snackbar text shown when a card is deleted from the cards Overview Page",
+    "placeholders": {
+      "cardTitle": {
+        "description": "The title of the card that was deleted"
+      }
+    }
+  },
+  "cardsOverviewClearCompletedButtonText": "Clear completed",
+  "@cardsOverviewClearCompletedButtonText": {
+    "description": "Button text shown in the options dropdown of the cards Overview Page that deletes all completed cards"
+  },
+  "cardsOverviewEmptyText": "No cards found with the selected filters.",
+  "@cardsOverviewEmptyText": {
+    "description": "Text shown in the cards Overview Page when no cards are found with the selected filters"
+  },
+  "cardsOverviewErrorSnackbarText": "An error occurred while loading cards.",
+  "@cardsOverviewErrorSnackbarText": {
+    "description": "Snackbar text shown when an error occurs while loading cards"
+  },
+  "cardsOverviewFilterActiveOnly": "Active only",
+  "@cardsOverviewFilterActiveOnly": {
+    "description": "Text shown in the filter dropdown of the cards Overview Page for the option to display active cards only"
+  },
+  "cardsOverviewFilterAll": "All",
+  "@cardsOverviewFilterAll": {
+    "description": "Text shown in the filter dropdown of the cards Overview Page for the option to display all cards"
+  },
+  "cardsOverviewFilterCompletedOnly": "Completed only",
+  "@cardsOverviewFilterCompletedOnly": {
+    "description": "Text shown in the filter dropdown of the cards Overview Page for the option to display completed cards only"
+  },
+  "cardsOverviewFilterTooltip": "Filter",
+  "@cardsOverviewFilterTooltip": {
+    "description": "Tooltip text shown in the filter dropdown of the cards Overview Page"
+  },
+  "cardsOverviewMarkAllCompleteButtonText": "Mark all complete",
+  "@cardsOverviewMarkAllCompleteButtonText": {
+    "description": "Button text shown in the options dropdown of the cards Overview Page that marks all current cards as complete"
+  },
+  "cardsOverviewOptionsClearCompleted": "Clear completed",
+  "@cardsOverviewOptionsClearCompleted": {
+    "description": "Button text shown in the options dropdown of the cards Overview Page that deletes all completed cards"
+  },
+  "cardsOverviewOptionsMarkAllComplete": "Mark all as completed",
+  "@cardsOverviewOptionsMarkAllComplete": {
+    "description": "Button text shown in the options dropdown of the cards Overview Page that marks all cards as complete"
+  },
+  "cardsOverviewOptionsMarkAllIncomplete": "Mark all as incomplete",
+  "@cardsOverviewOptionsMarkAllIncomplete": {
+    "description": "Button text shown in the options dropdown of the cards Overview Page that marks all cards as incomplete"
+  },
+  "cardsOverviewOptionsTooltip": "Options",
+  "@cardsOverviewOptionsTooltip": {
+    "description": "Tooltip text shown in the options dropdown of the cards Overview Page"
+  },
+  "cardsOverviewUndoDeletionButtonText": "Undo",
+  "@cardsOverviewUndoDeletionButtonText": {
+    "description": "Button text shown in the snackbar that undoes a deletion of a card"
+  },
+  "editcardAddAppBarTitle": "Add card",
+  "@editcardAddAppBarTitle": {
+    "description": "Title text shown in the AppBar of the card Edit Page when adding a new card"
+  },
+  "editcardDescriptionLabel": "Description",
+  "@editcardDescriptionLabel": {
+    "description": "Label text shown in the description input field of the card Edit Page"
+  },
+  "editcardEditAppBarTitle": "Edit card",
+  "@editcardEditAppBarTitle": {
+    "description": "Title text shown in the AppBar of the card Edit Page when editing an existing card"
+  },
+  "editcardSaveButtonTooltip": "Save changes",
+  "@editcardSaveButtonTooltip": {
+    "description": "Tooltip text shown in the save button on the card Edit Page"
+  },
+  "editcardTitleLabel": "Title",
+  "@editcardTitleLabel": {
+    "description": "Label text shown in the title input field of the card Edit Page"
+  },
+  "statsActivecardCountLabel": "Active cards",
+  "@statsActivecardCountLabel": {
+    "description": "Label text shown in the active cards count section of the Stats Page"
+  },
+  "statsAppBarTitle": "Stats",
+  "@statsAppBarTitle": {
+    "description": "Title text shown in the AppBar of the Stats Page"
+  },
+  "statsCompletedcardCountLabel": "Completed cards",
+  "@statsCompletedcardCountLabel": {
+    "description": "Label text shown in the completed cards count section of the Stats Page"
+  }
+}
