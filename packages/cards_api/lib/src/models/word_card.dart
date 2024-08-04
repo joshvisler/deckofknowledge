@@ -4,13 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
-part 'card.g.dart';
+part 'word_card.g.dart';
 
 @immutable
 @JsonSerializable()
-class Card extends Equatable {
+class WordCard extends Equatable {
   /// {@macro todo_item}
-  Card({
+  WordCard({
     required this.word,
     String? id,
     this.translation = '',
@@ -62,7 +62,7 @@ class Card extends Equatable {
   /// Returns a copy of this `todo` with the given values updated.
   ///
   /// {@macro todo_item}
-  Card copyWith({
+  WordCard copyWith({
     String? id,
     String? word,
     String? translation,
@@ -71,7 +71,7 @@ class Card extends Equatable {
     List<String>? context,
     List<String>? tags,
   }) {
-    return Card(
+    return WordCard(
       id: id ?? this.id,
       description: description ?? this.description,
       word: word ?? this.word,
@@ -83,10 +83,10 @@ class Card extends Equatable {
   }
 
   /// Deserializes the given [JsonMap] into a [Todo].
-  static Card fromJson(JsonMap json) => _$CardFromJson(json);
+  static WordCard fromJson(JsonMap json) => _$WordCardFromJson(json);
 
   /// Converts this [Todo] into a [JsonMap].
-  JsonMap toJson() => _$CardToJson(this);
+  JsonMap toJson() => _$WordCardToJson(this);
 
   @override
   List<Object> get props =>

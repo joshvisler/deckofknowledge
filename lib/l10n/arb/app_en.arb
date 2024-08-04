@@ -29,7 +29,7 @@
   "@cardsOverviewClearCompletedButtonText": {
     "description": "Button text shown in the options dropdown of the cards Overview Page that deletes all completed cards"
   },
-  "cardsOverviewEmptyText": "No cards found with the selected filters.",
+  "cardsOverviewEmptyText": "Create your first card",
   "@cardsOverviewEmptyText": {
     "description": "Text shown in the cards Overview Page when no cards are found with the selected filters"
   },

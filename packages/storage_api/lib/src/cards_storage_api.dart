@@ -13,7 +13,7 @@ class CardsStorageApi extends CardsApi {
 
   final SharedPreferences _preferences;
 
-  late final _cardsStreamController = BehaviorSubject<List<Card>>.seeded(
+  late final _cardsStreamController = BehaviorSubject<List<WordCard>>.seeded(
     const [],
   );
 
@@ -30,7 +30,8 @@ class CardsStorageApi extends CardsApi {
       final cards = List<Map<dynamic, dynamic>>.from(
         json.decode(cardsJson) as List,
       )
-          .map((jsonMap) => Card.fromJson(Map<String, dynamic>.from(jsonMap)))
+          .map((jsonMap) =>
+              WordCard.fromJson(Map<String, dynamic>.from(jsonMap)))
           .toList();
       _cardsStreamController.add(cards);
     } else {
@@ -39,7 +40,7 @@ class CardsStorageApi extends CardsApi {
   }
 
   @override
-  Future<void> addCard(Card card) {
+  Future<void> addCard(WordCard card) {
     final cards = [..._cardsStreamController.value, card];
     final cardIndex = cards.indexWhere((c) => c.id == card.id);
     if (cardIndex != -1) {
@@ -67,12 +68,12 @@ class CardsStorageApi extends CardsApi {
   }
 
   @override
-  Stream<List<Card>> getCards() {
+  Stream<List<WordCard>> getCards() {
     return _cardsStreamController.asBroadcastStream();
   }
 
   @override
-  Future<void> updateCard(Card card) {
+  Future<void> updateCard(WordCard card) {
     final cards = [..._cardsStreamController.value, card];
     final cardIndex = cards.indexWhere((c) => c.id == card.id);
 

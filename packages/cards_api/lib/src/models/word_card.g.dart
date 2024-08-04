@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'card.dart';
+part of 'word_card.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Card _$CardFromJson(Map<String, dynamic> json) => Card(
+WordCard _$WordCardFromJson(Map<String, dynamic> json) => WordCard(
       word: json['word'] as String,
       id: json['id'] as String?,
       translation: json['translation'] as String? ?? '',
@@ -27,7 +27,7 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
               const [],
     );
 
-Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
+Map<String, dynamic> _$WordCardToJson(WordCard instance) => <String, dynamic>{
       'id': instance.id,
       'word': instance.word,
       'translation': instance.translation,

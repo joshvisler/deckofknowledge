@@ -1,13 +1,13 @@
-import 'package:cards_api/src/models/card.dart';
+import 'package:cards_api/src/models/word_card.dart';
 
 abstract class CardsApi {
   const CardsApi();
 
-  Stream<List<Card>> getCards();
+  Stream<List<WordCard>> getCards();
 
-  Future<void> addCard(Card card);
+  Future<void> addCard(WordCard card);
 
   Future<void> deleteCard(String id);
 
-  Future<void> updateCard(Card card);
+  Future<void> updateCard(WordCard card);
 }

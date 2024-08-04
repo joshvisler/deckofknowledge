@@ -7,16 +7,16 @@ import 'package:mocktail/mocktail.dart';
 
 class MockCardsApi extends Mock implements CardsApi {}
 
-class FakeCard extends Fake implements Card {}
+class FakeCard extends Fake implements WordCard {}
 
 void main() {
   group('CardsRepository', () {
     late CardsApi api;
 
     final cards = [
-      Card(id: '1', word: 'Hallo', translation: 'Hello', context: []),
-      Card(id: '2', word: 'Welt', translation: 'World', context: []),
-      Card(id: '3', word: 'Test', translation: 'Test', context: []),
+      WordCard(id: '1', word: 'Hallo', translation: 'Hello', context: []),
+      WordCard(id: '2', word: 'Welt', translation: 'World', context: []),
+      WordCard(id: '3', word: 'Test', translation: 'Test', context: []),
     ];
 
     setUpAll(() {
@@ -64,7 +64,7 @@ void main() {
 
     group('addCard', () {
       test('makes correct api request', () {
-        final newCard = Card(
+        final newCard = WordCard(
           id: '4',
           word: 'Arbeiten',
           translation: 'Work',
@@ -80,7 +80,7 @@ void main() {
 
     group('updateCard', () {
       test('makes correct api request', () {
-        final card = Card(
+        final card = WordCard(
           id: '1',
           word: 'Calt',
           translation: 'Cold',

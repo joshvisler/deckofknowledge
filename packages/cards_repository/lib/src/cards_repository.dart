@@ -7,11 +7,11 @@ class CardsRepository {
 
   final CardsApi _cardsApi;
 
-  Future<void> addCard(Card card) => _cardsApi.addCard(card);
+  Future<void> addCard(WordCard card) => _cardsApi.addCard(card);
 
   Future<void> deleteCard(String id) => _cardsApi.deleteCard(id);
 
-  Stream<List<Card>> getCards() => _cardsApi.getCards();
+  Stream<List<WordCard>> getCards() => _cardsApi.getCards();
 
-  Future<void> updateCard(Card card) => _cardsApi.updateCard(card);
+  Future<void> updateCard(WordCard card) => _cardsApi.updateCard(card);
 }
