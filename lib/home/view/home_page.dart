@@ -24,7 +24,6 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-        indicatorColor: Colors.amber,
         selectedIndex: selectedTab.index,
         destinations: const <Widget>[
           NavigationDestination(

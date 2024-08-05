@@ -16,6 +16,7 @@ dependencies:
   very_good_cli: ^0.21.0
   intl: ^0.19.0
   flutter_card_swiper: ^7.0.1
+  google_fonts: ^6.2.1
 
   gemini_api:
     path: packages/gemini_api

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:myapp/cards_overview/bloc/cards_overview_bloc.dart';
-import 'package:myapp/cards_overview/widgets/create_word_dialog.dart';
+import 'package:myapp/edit_word_card/view/create_word_dialog.dart';
 import 'package:myapp/l10n/l10n.dart';
 
 class WordCardsOverviewPage extends StatelessWidget {
@@ -29,16 +29,15 @@ class CardsOverviewView extends StatelessWidget {
     final l10n = context.l10n;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.small(
           tooltip: l10n.cardDetailsEditButtonTooltip,
           shape: const ContinuousRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(90)),
+            borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
-          backgroundColor: Colors.amber,
           onPressed: () => showDialog(
                 context: context,
                 builder: (BuildContext context) =>
-                    const Dialog(child: CreateWordCardDialog()),
+                    const Dialog(child: EditWordCard()),
               ),
           child: const Icon(Icons.add)),
       body: MultiBlocListener(
@@ -100,8 +99,7 @@ class CardsOverviewView extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) =>
-                          const CreateWordCardDialog(),
+                      builder: (BuildContext context) => const EditWordCard(),
                     ),
                     child: const Text('Show Dialog'),
                   ),
