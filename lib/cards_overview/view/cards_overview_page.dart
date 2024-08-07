@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:myapp/cards_overview/bloc/cards_overview_bloc.dart';
+import 'package:myapp/cards_overview/widgets/short_word_card.dart';
 import 'package:myapp/edit_word_card/view/create_word_dialog.dart';
 import 'package:myapp/l10n/l10n.dart';
 
@@ -36,8 +37,10 @@ class CardsOverviewView extends StatelessWidget {
           ),
           onPressed: () => showDialog(
                 context: context,
-                builder: (BuildContext context) =>
-                    const Dialog(child: EditWordCard()),
+                builder: (BuildContext context) => const Dialog.fullscreen(
+                    child: EditWordCard(
+                  isCreatingMode: true,
+                )),
               ),
           child: const Icon(Icons.add)),
       body: MultiBlocListener(
@@ -99,7 +102,8 @@ class CardsOverviewView extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) => const EditWordCard(),
+                      builder: (BuildContext context) =>
+                          const EditWordCard(isCreatingMode: true),
                     ),
                     child: const Text('Show Dialog'),
                   ),
@@ -110,9 +114,18 @@ class CardsOverviewView extends StatelessWidget {
             final List<Container> cardsWidgets = state.cards.map((card) {
               return Container(
                 alignment: Alignment.center,
-                child: Text(card.word),
+                child: ShortCard(card: card),
               );
             }).toList();
+
+            if (cardsWidgets.length == 1) {
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                alignment: Alignment.center,
+                child: cardsWidgets[0],
+              );
+            }
 
             return CardSwiper(
               cardsCount: cardsWidgets.length,

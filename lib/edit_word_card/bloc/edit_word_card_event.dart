@@ -8,7 +8,10 @@ sealed class EditWordCardEvent extends Equatable {
 }
 
 final class EditWordCardSubscriptionRequested extends EditWordCardEvent {
-  const EditWordCardSubscriptionRequested();
+  const EditWordCardSubscriptionRequested(this.isCreating, this.card);
+
+  final bool isCreating;
+  final WordCard? card;
 }
 
 final class EditWordCardGenerateCard extends EditWordCardEvent {

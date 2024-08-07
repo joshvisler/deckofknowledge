@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cards_repository/cards_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +28,11 @@ class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
     EditWordCardSubscriptionRequested event,
     Emitter<EditWordCardState> emit,
   ) async {
-    emit(state.copyWith(status: () => EditCardStatus.editing));
+    emit(state.copyWith(
+        status: () =>
+            event.isCreating ? EditCardStatus.initial : EditCardStatus.editing,
+        isCreating: () => event.isCreating,
+        card: () => event.card));
   }
 
   Future<void> _onGenerateCard(
@@ -38,11 +44,14 @@ class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
     await _geminiRepository
         .generateCard(state.wordText)
         .then((wordCard) => {
+              _cardsRepository.addCard(wordCard),
               emit(state.copyWith(
                   status: () => EditCardStatus.editing, card: () => wordCard))
             })
-        .catchError((error) =>
-            {emit(state.copyWith(status: () => EditCardStatus.failure))});
+        .catchError((error) => {
+              log(error.toString()),
+              emit(state.copyWith(status: () => EditCardStatus.failure))
+            });
   }
 
   Future<void> _onCardSave(

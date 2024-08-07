@@ -59,11 +59,11 @@ class CardsStorageApi extends CardsApi {
     final cardIndex = cards.indexWhere((c) => c.id == id);
 
     if (cardIndex != -1) {
-      throw CardNotFoundException();
-    } else {
       cards.removeAt(cardIndex);
       _cardsStreamController.add(cards);
       return _setValue(kCardsCollectionKey, json.encode(cards));
+    } else {
+      throw CardNotFoundException();
     }
   }
 

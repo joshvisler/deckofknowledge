@@ -14,9 +14,9 @@ void main() {
     late CardsApi api;
 
     final cards = [
-      WordCard(id: '1', word: 'Hallo', translation: 'Hello', context: []),
-      WordCard(id: '2', word: 'Welt', translation: 'World', context: []),
-      WordCard(id: '3', word: 'Test', translation: 'Test', context: []),
+      WordCard(id: '1', word: 'Hallo', translate: 'Hello', context: []),
+      WordCard(id: '2', word: 'Welt', translate: 'World', context: []),
+      WordCard(id: '3', word: 'Test', translate: 'Test', context: []),
     ];
 
     setUpAll(() {
@@ -67,7 +67,7 @@ void main() {
         final newCard = WordCard(
           id: '4',
           word: 'Arbeiten',
-          translation: 'Work',
+          translate: 'Work',
         );
 
         final subject = createSubject();
@@ -83,7 +83,7 @@ void main() {
         final card = WordCard(
           id: '1',
           word: 'Calt',
-          translation: 'Cold',
+          translate: 'Cold',
         );
 
         final subject = createSubject();

@@ -13,7 +13,7 @@ class WordCard extends Equatable {
   WordCard({
     required this.word,
     String? id,
-    this.translation = '',
+    this.translate = '',
     this.examples = const [],
     this.description = const [],
     this.context = const [],
@@ -37,7 +37,7 @@ class WordCard extends Equatable {
   /// The translation of the word.
   ///
   /// Note that the title may be empty.
-  final String translation;
+  final String translate;
 
   /// The examples of the word.
   ///
@@ -65,7 +65,7 @@ class WordCard extends Equatable {
   WordCard copyWith({
     String? id,
     String? word,
-    String? translation,
+    String? translate,
     List<String>? description,
     List<String>? examples,
     List<String>? context,
@@ -75,7 +75,7 @@ class WordCard extends Equatable {
       id: id ?? this.id,
       description: description ?? this.description,
       word: word ?? this.word,
-      translation: translation ?? this.translation,
+      translate: translate ?? this.translate,
       examples: examples ?? this.examples,
       context: context ?? this.context,
       tags: tags ?? this.tags,
@@ -83,12 +83,13 @@ class WordCard extends Equatable {
   }
 
   /// Deserializes the given [JsonMap] into a [Todo].
-  static WordCard fromJson(JsonMap json) => _$WordCardFromJson(json);
+  static WordCard fromJson(Map<String, dynamic> json) =>
+      _$WordCardFromJson(json);
 
   /// Converts this [Todo] into a [JsonMap].
   JsonMap toJson() => _$WordCardToJson(this);
 
   @override
   List<Object> get props =>
-      [id, word, translation, description, examples, context, tags];
+      [id, word, translate, description, examples, context, tags];
 }

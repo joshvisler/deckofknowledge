@@ -40,6 +40,17 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
   ) async {
     emit(state.copyWith(lastDeletedCard: () => event.card));
     await _cardsRepository.deleteCard(event.card.id);
+
+    await emit.forEach<List<WordCard>>(
+      _cardsRepository.getCards(),
+      onData: (cards) => state.copyWith(
+        status: () => CardsOverviewStatus.success,
+        cards: () => cards,
+      ),
+      onError: (_, __) => state.copyWith(
+        status: () => CardsOverviewStatus.failure,
+      ),
+    );
   }
 
   Future<void> _onUndoDeletionRequested(

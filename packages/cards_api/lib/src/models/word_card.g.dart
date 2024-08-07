@@ -9,7 +9,7 @@ part of 'word_card.dart';
 WordCard _$WordCardFromJson(Map<String, dynamic> json) => WordCard(
       word: json['word'] as String,
       id: json['id'] as String?,
-      translation: json['translation'] as String? ?? '',
+      translate: json['translate'] as String? ?? '',
       examples: (json['examples'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -30,7 +30,7 @@ WordCard _$WordCardFromJson(Map<String, dynamic> json) => WordCard(
 Map<String, dynamic> _$WordCardToJson(WordCard instance) => <String, dynamic>{
       'id': instance.id,
       'word': instance.word,
-      'translation': instance.translation,
+      'translate': instance.translate,
       'examples': instance.examples,
       'description': instance.description,
       'context': instance.context,
