@@ -4,7 +4,7 @@ enum EditCardStatus { initial, editing, generating, saving, success, failure }
 
 final class EditWordCardState extends Equatable {
   const EditWordCardState(
-      {this.status = EditCardStatus.generating,
+      {this.status = EditCardStatus.initial,
       this.card,
       this.isCreating = false,
       this.wordText = ''});

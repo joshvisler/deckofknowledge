@@ -10,7 +10,7 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
       : _cardsRepository = cardsRepository,
         super(const CardsOverviewState()) {
     on<CardsOverviewSubscriptionRequested>(_onSubscriptionRequested);
-    on<CardsOverviewTodoDeleted>(_onCardDeleted);
+    on<CardsOverviewDeleted>(_onCardDeleted);
     on<CardsOverviewUndoDeletionRequested>(_onUndoDeletionRequested);
   }
 
@@ -35,7 +35,7 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
   }
 
   Future<void> _onCardDeleted(
-    CardsOverviewTodoDeleted event,
+    CardsOverviewDeleted event,
     Emitter<CardsOverviewState> emit,
   ) async {
     emit(state.copyWith(lastDeletedCard: () => event.card));

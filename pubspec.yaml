@@ -29,6 +29,13 @@ dependencies:
 
   cards_repository:
     path: packages/cards_repository
+
+  read_api:
+    path: packages/read_api
+
+  read_repository:
+    path: packages/read_repository
+
   flutter_localizations:
     sdk: flutter
   equatable: ^2.0.5

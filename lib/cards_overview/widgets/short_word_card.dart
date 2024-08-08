@@ -28,7 +28,7 @@ class ShortCard extends StatelessWidget {
               IconButton(
                   onPressed: () => context
                       .read<CardsOverviewBloc>()
-                      .add(CardsOverviewTodoDeleted(card)),
+                      .add(CardsOverviewDeleted(card)),
                   icon: Icon(Icons.close)),
               Expanded(
                   child: Column(

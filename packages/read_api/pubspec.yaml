@@ -1,4 +1,4 @@
-name: gemini_api
+name: read_api
 description: "A new Flutter package project."
 version: 0.0.1
 
@@ -9,17 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_generative_ai: ^0.4.3
-  
-  cards_api:
-    path: ../cards_api
-
-  read_api:
-    path: ../read_api
+  json_annotation: ^4.9.0
+  equatable: ^2.0.5
+  uuid: ^4.4.2
+  meta: ^1.12.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-
-flutter:
+  json_serializable: ^6.8.0
+  build_runner: ^2.4.11

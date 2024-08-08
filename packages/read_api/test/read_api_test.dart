@@ -1,9 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:read_api/read_api.dart';
 
-import 'package:cards_api/src/cards_api.dart';
-
-class TestCardsApi extends CardsApi {
-  TestCardsApi() : super();
+class TestReadApi extends ReadApi {
+  TestReadApi() : super();
 
   @override
   dynamic noSuchMethod(Invocation invocation) {
@@ -12,9 +11,9 @@ class TestCardsApi extends CardsApi {
 }
 
 void main() {
-  group('CardsApi', () {
+  group('ReadApi', () {
     test('can be constructed', () {
-      expect(TestCardsApi.new, returnsNormally);
+      expect(TestReadApi.new, returnsNormally);
     });
   });
 }

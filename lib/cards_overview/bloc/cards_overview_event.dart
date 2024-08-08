@@ -11,8 +11,8 @@ final class CardsOverviewSubscriptionRequested extends CardsOverviewEvent {
   const CardsOverviewSubscriptionRequested();
 }
 
-final class CardsOverviewTodoDeleted extends CardsOverviewEvent {
-  const CardsOverviewTodoDeleted(this.card);
+final class CardsOverviewDeleted extends CardsOverviewEvent {
+  const CardsOverviewDeleted(this.card);
 
   final WordCard card;
 
