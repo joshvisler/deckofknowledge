@@ -6,23 +6,29 @@ final class CardsOverviewState extends Equatable {
   const CardsOverviewState(
       {this.status = CardsOverviewStatus.initial,
       this.cards = const [],
-      this.lastDeletedCard});
+      this.lastDeletedCard,
+      this.currentCardsSwapperIndex = 0
+      });
 
-  final List<WordCard> cards;
+  final List<SplashCardModel> cards;
   final CardsOverviewStatus status;
-  final WordCard? lastDeletedCard;
+  final SplashCardModel? lastDeletedCard;
+  final int currentCardsSwapperIndex;
 
   CardsOverviewState copyWith(
       {CardsOverviewStatus Function()? status,
-      List<WordCard> Function()? cards,
-      WordCard? Function()? lastDeletedCard}) {
+      List<SplashCardModel> Function()? cards,
+      SplashCardModel? Function()? lastDeletedCard,
+      int Function()? currentCardsSwapperIndex
+      }) {
     return CardsOverviewState(
         status: status != null ? status() : this.status,
         cards: cards != null ? cards() : this.cards,
+        currentCardsSwapperIndex: currentCardsSwapperIndex != null ? currentCardsSwapperIndex() : this.currentCardsSwapperIndex,
         lastDeletedCard:
             lastDeletedCard != null ? lastDeletedCard() : this.lastDeletedCard);
   }
 
   @override
-  List<Object?> get props => [status, cards, lastDeletedCard];
+  List<Object?> get props => [status, cards, lastDeletedCard, currentCardsSwapperIndex];
 }

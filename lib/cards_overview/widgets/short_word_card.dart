@@ -1,13 +1,14 @@
-import 'package:cards_repository/cards_repository.dart';
+import 'package:decks_repository/decks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/cards_overview/bloc/cards_overview_bloc.dart';
 import 'package:myapp/edit_word_card/view/create_word_dialog.dart';
 
 class ShortCard extends StatelessWidget {
-  const ShortCard({super.key, required this.card});
+  const ShortCard({super.key, required this.card, required this.deckId});
 
-  final WordCard card;
+  final SplashCardModel card;
+  final String deckId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class ShortCard extends StatelessWidget {
                   child: EditWordCard(
                 isCreatingMode: false,
                 card: card,
+                deckId: deckId,
               )),
             ),
         child: Card(
@@ -38,13 +40,13 @@ class ShortCard extends StatelessWidget {
                     Text(
                       card.word,
                       style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.w500),
+                          fontSize: 20, fontWeight: FontWeight.w500),
                     ),
                     const Divider(),
                     Text(
                       card.translate,
                       style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.w500),
+                          fontSize: 20, fontWeight: FontWeight.w500),
                     )
                   ]))
             ],

@@ -11,11 +11,13 @@ final class EditWordCardSubscriptionRequested extends EditWordCardEvent {
   const EditWordCardSubscriptionRequested(this.isCreating, this.card);
 
   final bool isCreating;
-  final WordCard? card;
+  final SplashCardModel? card;
 }
 
 final class EditWordCardGenerateCard extends EditWordCardEvent {
-  const EditWordCardGenerateCard();
+  const EditWordCardGenerateCard(this.deckId);
+
+  final String deckId;
 }
 
 final class EditWordCardSave extends EditWordCardEvent {

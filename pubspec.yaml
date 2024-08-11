@@ -24,17 +24,8 @@ dependencies:
   storage_api:
     path: packages/storage_api
 
-  cards_api:
-    path: packages/cards_api
-
-  cards_repository:
-    path: packages/cards_repository
-
-  read_api:
-    path: packages/read_api
-
-  read_repository:
-    path: packages/read_repository
+  decks_repository:
+    path: packages/decks_repository
 
   flutter_localizations:
     sdk: flutter
@@ -48,7 +39,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+  - assets/images/man_hello.png
 
 flutter_intl:
   main_locale: en_US
   enabled: true
+
+

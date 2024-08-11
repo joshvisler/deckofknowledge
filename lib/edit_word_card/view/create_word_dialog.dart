@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cards_repository/cards_repository.dart';
+import 'package:decks_repository/decks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gemini_api/gemini_api.dart';
@@ -8,10 +8,15 @@ import 'package:myapp/edit_word_card/bloc/edit_word_card_bloc.dart';
 import 'package:myapp/l10n/l10n.dart';
 
 class EditWordCard extends StatelessWidget {
-  const EditWordCard({super.key, required this.isCreatingMode, this.card});
+  const EditWordCard(
+      {super.key,
+      required this.isCreatingMode,
+      this.card,
+      required this.deckId});
 
   final bool isCreatingMode;
-  final WordCard? card;
+  final SplashCardModel? card;
+  final String deckId;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +28,7 @@ class EditWordCard extends StatelessWidget {
       child: EditWordCardDialog(
         isCreatingMode: isCreatingMode,
         card: card,
+        deckId: deckId,
       ),
     );
   }
@@ -30,10 +36,14 @@ class EditWordCard extends StatelessWidget {
 
 class EditWordCardDialog extends StatelessWidget {
   const EditWordCardDialog(
-      {super.key, required this.isCreatingMode, this.card});
+      {super.key,
+      required this.isCreatingMode,
+      this.card,
+      required this.deckId});
 
   final bool isCreatingMode;
-  final WordCard? card;
+  final SplashCardModel? card;
+  final String deckId;
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +112,8 @@ class EditWordCardDialog extends StatelessWidget {
                                             ? null
                                             : () => context
                                                 .read<EditWordCardBloc>()
-                                                .add(
-                                                    const EditWordCardGenerateCard()),
+                                                .add(EditWordCardGenerateCard(
+                                                    deckId)),
                                         child: const Text('Generate'))))
                           ])));
             } else if (state.card != null) {

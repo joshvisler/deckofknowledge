@@ -12,10 +12,8 @@ dependencies:
   shared_preferences: ^2.3.1
   meta: ^1.12.0
   rxdart: ^0.28.0
-  cards_api:
-    path: ../cards_api
-  read_api:
-    path: ../read_api
+  decks_repository:
+    path: ../decks_repository
 
 dev_dependencies:
   flutter_test:

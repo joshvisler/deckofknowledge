@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cards_repository/cards_repository.dart';
+import 'package:decks_repository/decks_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gemini_api/gemini_api.dart';
@@ -41,12 +41,20 @@ class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
   ) async {
     emit(state.copyWith(status: () => EditCardStatus.generating));
 
+    var newCard = SplashCardModel(word: state.wordText, deckId: event.deckId);
+
     await _geminiRepository
         .generateCard(state.wordText)
         .then((wordCard) => {
-              _cardsRepository.addCard(wordCard),
+              newCard = newCard.copyWith(
+                  translate: wordCard.translate,
+                  examples: wordCard.examples,
+                  description: wordCard.description,
+                  context: wordCard.context,
+                  tags: wordCard.tags),
+              _cardsRepository.add(newCard),
               emit(state.copyWith(
-                  status: () => EditCardStatus.editing, card: () => wordCard))
+                  status: () => EditCardStatus.editing, card: () => newCard))
             })
         .catchError((error) => {
               log(error.toString()),
@@ -61,7 +69,7 @@ class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
     emit(state.copyWith(status: () => EditCardStatus.saving));
 
     await _cardsRepository
-        .addCard(state.card!)
+        .add(state.card!)
         .then((wordCard) =>
             {emit(state.copyWith(status: () => EditCardStatus.success))})
         .catchError((error) =>

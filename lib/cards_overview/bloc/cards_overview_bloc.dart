@@ -1,4 +1,6 @@
-import 'package:cards_repository/cards_repository.dart';
+import 'dart:async';
+
+import 'package:decks_repository/decks_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,21 +11,22 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
   CardsOverviewBloc({required CardsRepository cardsRepository})
       : _cardsRepository = cardsRepository,
         super(const CardsOverviewState()) {
-    on<CardsOverviewSubscriptionRequested>(_onSubscriptionRequested);
+    on<CardsOverviewInitial>(_onInitial);
     on<CardsOverviewDeleted>(_onCardDeleted);
     on<CardsOverviewUndoDeletionRequested>(_onUndoDeletionRequested);
+    on<CardsOverviewSwaped>(_onSwaped);
   }
 
   final CardsRepository _cardsRepository;
 
-  Future<void> _onSubscriptionRequested(
-    CardsOverviewSubscriptionRequested event,
+  Future<void> _onInitial(
+    CardsOverviewInitial event,
     Emitter<CardsOverviewState> emit,
   ) async {
     emit(state.copyWith(status: () => CardsOverviewStatus.loading));
 
-    await emit.forEach<List<WordCard>>(
-      _cardsRepository.getCards(),
+    await emit.forEach<List<SplashCardModel>>(
+      _cardsRepository.get(),
       onData: (cards) => state.copyWith(
         status: () => CardsOverviewStatus.success,
         cards: () => cards,
@@ -39,10 +42,10 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
     Emitter<CardsOverviewState> emit,
   ) async {
     emit(state.copyWith(lastDeletedCard: () => event.card));
-    await _cardsRepository.deleteCard(event.card.id);
+    await _cardsRepository.delete(event.card.id);
 
-    await emit.forEach<List<WordCard>>(
-      _cardsRepository.getCards(),
+    await emit.forEach<List<SplashCardModel>>(
+      _cardsRepository.get(),
       onData: (cards) => state.copyWith(
         status: () => CardsOverviewStatus.success,
         cards: () => cards,
@@ -64,6 +67,15 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
 
     final todo = state.lastDeletedCard!;
     emit(state.copyWith(lastDeletedCard: () => null));
-    await _cardsRepository.addCard(todo);
+    await _cardsRepository.add(todo);
+  }
+
+  FutureOr<bool> _onSwaped(
+    CardsOverviewSwaped event,
+    Emitter<CardsOverviewState> emit,
+  ) async {
+    emit(state.copyWith(currentCardsSwapperIndex: () => event.index));
+
+    return true;
   }
 }

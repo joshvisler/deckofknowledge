@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cards_api/cards_api.dart';
+import 'package:decks_repository/decks_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,9 +14,12 @@ void main() {
     late SharedPreferences preferences;
 
     final Cards = [
-      WordCard(id: '1', word: 'Hallo', translate: 'Hello', context: []),
-      WordCard(id: '2', word: 'Welt', translate: 'World', context: []),
-      WordCard(id: '3', word: 'Test', translate: 'Test', context: []),
+      SplashCardModel(
+          id: '1', deckId: '1', word: 'Hallo', translate: 'Hello', context: []),
+      SplashCardModel(
+          id: '2', deckId: '1', word: 'Welt', translate: 'World', context: []),
+      SplashCardModel(
+          id: '3', deckId: '1', word: 'Test', translate: 'Test', context: []),
     ];
 
     setUp(() {
@@ -44,7 +47,7 @@ void main() {
         test('with existing Cards if present', () {
           final subject = createSubject();
 
-          expect(subject.getCards(), emits(Cards));
+          expect(subject.get(), emits(Cards));
           verify(
             () => preferences.getString(
               CardsStorageApi.kCardsCollectionKey,
@@ -57,7 +60,7 @@ void main() {
 
           final subject = createSubject();
 
-          expect(subject.getCards(), emits(const <WordCard>[]));
+          expect(subject.get(), emits(const <SplashCardModel>[]));
           verify(
             () => preferences.getString(
               CardsStorageApi.kCardsCollectionKey,
@@ -69,15 +72,16 @@ void main() {
 
     test('getCards returns stream of current list Cards', () {
       expect(
-        createSubject().getCards(),
+        createSubject().get(),
         emits(Cards),
       );
     });
 
     group('saveCard', () {
       test('saves new Cards', () {
-        final newCard = WordCard(
+        final newCard = SplashCardModel(
           id: '4',
+          deckId: '1',
           word: 'Arbeiten',
           translate: 'Work',
         );
@@ -86,8 +90,8 @@ void main() {
 
         final subject = createSubject();
 
-        expect(subject.addCard(newCard), completes);
-        expect(subject.getCards(), emits(newCards));
+        expect(subject.add(newCard), completes);
+        expect(subject.get(), emits(newCards));
 
         verify(
           () => preferences.setString(
@@ -98,8 +102,9 @@ void main() {
       });
 
       test('updates existing Cards', () {
-        final updatedCard = WordCard(
+        final updatedCard = SplashCardModel(
           id: '1',
+          deckId: '1',
           word: 'Hallo',
           translate: 'Hello',
         );
@@ -107,8 +112,8 @@ void main() {
 
         final subject = createSubject();
 
-        expect(subject.updateCard(updatedCard), completes);
-        expect(subject.getCards(), emits(newCards));
+        expect(subject.update(updatedCard), completes);
+        expect(subject.get(), emits(newCards));
 
         verify(
           () => preferences.setString(
@@ -125,8 +130,8 @@ void main() {
 
         final subject = createSubject();
 
-        expect(subject.deleteCard(Cards[0].id), completes);
-        expect(subject.getCards(), emits(newCards));
+        expect(subject.delete(Cards[0].id), completes);
+        expect(subject.get(), emits(newCards));
 
         verify(
           () => preferences.setString(
@@ -143,7 +148,7 @@ void main() {
           final subject = createSubject();
 
           expect(
-            () => subject.deleteCard('non-existing-id'),
+            () => subject.delete('non-existing-id'),
             throwsA(isA<CardNotFoundException>()),
           );
         },

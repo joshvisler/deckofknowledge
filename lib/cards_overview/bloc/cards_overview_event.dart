@@ -7,14 +7,14 @@ sealed class CardsOverviewEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class CardsOverviewSubscriptionRequested extends CardsOverviewEvent {
-  const CardsOverviewSubscriptionRequested();
+final class CardsOverviewInitial extends CardsOverviewEvent {
+  const CardsOverviewInitial();
 }
 
 final class CardsOverviewDeleted extends CardsOverviewEvent {
   const CardsOverviewDeleted(this.card);
 
-  final WordCard card;
+  final SplashCardModel card;
 
   @override
   List<Object> get props => [card];
@@ -22,4 +22,10 @@ final class CardsOverviewDeleted extends CardsOverviewEvent {
 
 final class CardsOverviewUndoDeletionRequested extends CardsOverviewEvent {
   const CardsOverviewUndoDeletionRequested();
+}
+
+final class CardsOverviewSwaped extends CardsOverviewEvent {
+  const CardsOverviewSwaped(this.index);
+
+  final int index;
 }

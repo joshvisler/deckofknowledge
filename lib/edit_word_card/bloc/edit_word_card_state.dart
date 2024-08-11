@@ -9,14 +9,14 @@ final class EditWordCardState extends Equatable {
       this.isCreating = false,
       this.wordText = ''});
 
-  final WordCard? card;
+  final SplashCardModel? card;
   final EditCardStatus status;
   final bool isCreating;
   final String wordText;
 
   EditWordCardState copyWith({
     EditCardStatus Function()? status,
-    WordCard? Function()? card,
+    SplashCardModel? Function()? card,
     bool Function()? isCreating,
     String Function()? wordText,
   }) {

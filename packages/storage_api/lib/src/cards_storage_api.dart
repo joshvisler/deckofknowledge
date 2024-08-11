@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cards_api/cards_api.dart';
+import 'package:decks_repository/decks_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +13,8 @@ class CardsStorageApi extends CardsApi {
 
   final SharedPreferences _preferences;
 
-  late final _cardsStreamController = BehaviorSubject<List<WordCard>>.seeded(
+  late final _cardsStreamController =
+      BehaviorSubject<List<SplashCardModel>>.seeded(
     const [],
   );
 
@@ -31,7 +32,7 @@ class CardsStorageApi extends CardsApi {
         json.decode(cardsJson) as List,
       )
           .map((jsonMap) =>
-              WordCard.fromJson(Map<String, dynamic>.from(jsonMap)))
+              SplashCardModel.fromJson(Map<String, dynamic>.from(jsonMap)))
           .toList();
       _cardsStreamController.add(cards);
     } else {
@@ -40,13 +41,13 @@ class CardsStorageApi extends CardsApi {
   }
 
   @override
-  Future<void> addCard(WordCard card) {
-    final cards = [..._cardsStreamController.value, card];
-    final cardIndex = cards.indexWhere((c) => c.id == card.id);
+  Future<void> add(SplashCardModel model) {
+    final cards = [..._cardsStreamController.value, model];
+    final cardIndex = cards.indexWhere((c) => c.id == model.id);
     if (cardIndex != -1) {
-      cards[cardIndex] = card;
+      cards[cardIndex] = model;
     } else {
-      cards.add(card);
+      cards.add(model);
     }
 
     _cardsStreamController.add(cards);
@@ -54,7 +55,7 @@ class CardsStorageApi extends CardsApi {
   }
 
   @override
-  Future<void> deleteCard(String id) {
+  Future<void> delete(String id) {
     final cards = [..._cardsStreamController.value];
     final cardIndex = cards.indexWhere((c) => c.id == id);
 
@@ -68,17 +69,17 @@ class CardsStorageApi extends CardsApi {
   }
 
   @override
-  Stream<List<WordCard>> getCards() {
+  Stream<List<SplashCardModel>> get() {
     return _cardsStreamController.asBroadcastStream();
   }
 
   @override
-  Future<void> updateCard(WordCard card) {
-    final cards = [..._cardsStreamController.value, card];
-    final cardIndex = cards.indexWhere((c) => c.id == card.id);
+  Future<void> update(SplashCardModel model) {
+    final cards = [..._cardsStreamController.value, model];
+    final cardIndex = cards.indexWhere((c) => c.id == model.id);
 
     if (cardIndex != -1) {
-      cards[cardIndex] = card;
+      cards[cardIndex] = model;
     }
 
     _cardsStreamController.add(cards);
