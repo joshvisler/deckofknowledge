@@ -45,16 +45,14 @@ class CreateTextDialog extends StatelessWidget {
               child:
                   BlocBuilder<DialogsStoriesViewBloc, DialogsStoriesViewState>(
                 builder: (context, state) {
-                  return Padding(
-                      padding: EdgeInsets.only(
-                        top: 16,
-                        left: 16,
-                        right: 16,
-                      ),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TextField(
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            child: TextField(
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'Enter a search term',
@@ -64,38 +62,50 @@ class CreateTextDialog extends StatelessWidget {
                                   .add(DialogsStoriesThemeChanged(
                                     value,
                                   )),
-                            ),
-                            ListTile(
-                                title: const Text('Dialog'),
-                                leading: Radio<TextType>(
-                                  value: TextType.dialog,
-                                  onChanged: (TextType? value) => context
-                                      .read<DialogsStoriesViewBloc>()
-                                      .add(DialogsStoriesTypeChanged(value!)),
-                                  groupValue: state.selectedType,
-                                )),
-                            ListTile(
-                                title: const Text('Story'),
-                                leading: Radio<TextType>(
-                                  value: TextType.story,
-                                  onChanged: (TextType? value) => context
-                                      .read<DialogsStoriesViewBloc>()
-                                      .add(DialogsStoriesTypeChanged(value!)),
-                                  groupValue: state.selectedType,
-                                )),
-                            Padding(
-                                padding: const EdgeInsets.only(top: 24),
-                                child: Center(
-                                    child: FilledButton(
-                                        onPressed: () => state.theme.isEmpty
-                                            ? null
-                                            : context
-                                                .read<DialogsStoriesViewBloc>()
-                                                .add(DialogsStoriesGenerate(
-                                                    state.selectedType,
-                                                    state.theme)),
-                                        child: const Text('Save'))))
-                          ]));
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            child: Text(
+                              'Text type',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            )),
+                        ListTile(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 0),
+                            title: const Text('Dialog'),
+                            leading: Radio<TextType>(
+                              value: TextType.dialog,
+                              onChanged: (TextType? value) => context
+                                  .read<DialogsStoriesViewBloc>()
+                                  .add(DialogsStoriesTypeChanged(value!)),
+                              groupValue: state.selectedType,
+                            )),
+                        ListTile(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 0),
+                            title: const Text('Story'),
+                            leading: Radio<TextType>(
+                              value: TextType.story,
+                              onChanged: (TextType? value) => context
+                                  .read<DialogsStoriesViewBloc>()
+                                  .add(DialogsStoriesTypeChanged(value!)),
+                              groupValue: state.selectedType,
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 24),
+                            child: Center(
+                                child: FilledButton(
+                                    statesController: WidgetStatesController(),
+                                    onPressed: state.theme.isEmpty
+                                        ? null
+                                        : () => context
+                                            .read<DialogsStoriesViewBloc>()
+                                            .add(DialogsStoriesGenerate(
+                                                state.selectedType,
+                                                state.theme)),
+                                    child: const Text('Save'))))
+                      ]);
                 },
               ),
             ),
