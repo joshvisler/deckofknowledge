@@ -37,8 +37,7 @@ void bootstrap(
         geminiRepository: geminiRepository,
         decksRepository: decksRepository,
         dialogsRepository: dialogsRepository,
-        storiesRepository: storiesRepository
-        )),
+        storiesRepository: storiesRepository)),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

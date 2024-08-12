@@ -12,11 +12,12 @@ class DialogsStoriesViewBloc
   DialogsStoriesViewBloc(
       {required DialogsRepository dialogsRepository,
       required StoriesRepository storiesRepository,
-      required GeminiRepository geminiRepository})
+      required GeminiRepository geminiRepository,
+      required String deckId})
       : _dialogsRepository = dialogsRepository,
         _storiesRepository = storiesRepository,
         _geminiRepository = geminiRepository,
-        super(const DialogsStoriesViewState()) {
+        super(DialogsStoriesViewState(deckId: deckId)) {
     on<DialogsStoriesViewInitial>(_onInitial);
     on<DialogsStoriesGenerate>(_onGenerate);
     on<DialogsStoriesThemeChanged>(_onThemeChanged);
@@ -53,21 +54,21 @@ class DialogsStoriesViewBloc
   ) async {
     emit(state.copyWith(status: () => DialogsStoriesViewStatus.loading));
 
+    var texts = state.texts.toList();
     if (event.type == TextType.dialog) {
       var model = await _geminiRepository.generateDialog(event.theme);
       await _dialogsRepository.add(model);
       var text = DialogStoryModel.copyWithDialog(dialog: model);
-      state.texts.add(text);
+      texts.add(text);
     } else {
       var model = await _geminiRepository.generateStory(event.theme);
       await _storiesRepository.add(model);
       var text = DialogStoryModel.copyWithStory(story: model);
-      state.texts.add(text);
+      texts.add(text);
     }
 
     emit(state.copyWith(
-        status: () => DialogsStoriesViewStatus.initial,
-        texts: () => state.texts));
+        status: () => DialogsStoriesViewStatus.success, texts: () => texts));
   }
 
   Future<void> _onThemeChanged(

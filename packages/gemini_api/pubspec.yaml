@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_generative_ai: ^0.4.3
+  google_generative_ai: ^0.4.4
   json_annotation: ^4.9.0
   
   decks_repository:

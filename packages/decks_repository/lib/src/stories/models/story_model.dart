@@ -14,7 +14,7 @@ class StoryModel extends Equatable {
     required this.theme,
     required this.deckId,
     String? id,
-    this.translate = '',
+    this.translate = const [],
   })  : assert(
           id == null || id.isNotEmpty,
           'id must either be null or not empty',
@@ -23,22 +23,22 @@ class StoryModel extends Equatable {
 
   final String id;
   final String deckId;
-  final String text;
   final String theme;
-  final String translate;
+  final List<String> text;
+  final List<String> translate;
 
   StoryModel copyWith({
     String? id,
     String? deckId,
-    String? text,
+    List<String>? text,
     String? theme,
-    String? translate,
+    List<String>? translate,
   }) {
     return StoryModel(
       id: id ?? this.id,
       deckId: deckId ?? this.deckId,
       text: text ?? this.text,
-      theme: text ?? this.theme,
+      theme: theme ?? this.theme,
       translate: translate ?? this.translate,
     );
   }

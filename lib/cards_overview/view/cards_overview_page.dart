@@ -14,12 +14,7 @@ class WordCardsOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CardsOverviewBloc(
-        cardsRepository: context.read<CardsRepository>(),
-      )..add(const CardsOverviewInitial()),
-      child: CardsOverviewView(deckId: deckId),
-    );
+    return CardsOverviewView(deckId: deckId);
   }
 }
 

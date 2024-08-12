@@ -24,11 +24,13 @@ class TextCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                     radius: 30,
                     child: Icon(
-                      Icons.style,
-                      size: 36,
+                      text.type == TextType.story
+                          ? Icons.auto_stories
+                          : Icons.forum,
+                      size: 24,
                       color: Colors.white,
                     )),
                 const SizedBox(width: 16),
@@ -42,7 +44,7 @@ class TextCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('${text.type}'),
+                    Text('${text.type.name}'),
                   ],
                 )
               ],

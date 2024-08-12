@@ -40,14 +40,6 @@ class DeckCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text('${deck.cardsNumber} Cards, '),
-                        Text('${deck.dialogsNumber} Dialogs, '),
-                        Text('${deck.storiesNumber} Stories')
-                      ],
-                    )
                   ],
                 )
               ],

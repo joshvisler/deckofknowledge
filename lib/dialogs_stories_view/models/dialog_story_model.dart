@@ -33,10 +33,10 @@ class DialogStoryModel {
     return DialogStoryModel(
       id: story.id,
       deckId: story.deckId,
-      text: [story.text],
+      text: story.text,
       theme: story.theme,
-      translate: [story.translate],
-      type: TextType.dialog,
+      translate: story.translate,
+      type: TextType.story,
     );
   }
 }

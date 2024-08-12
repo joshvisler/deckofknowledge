@@ -6,26 +6,19 @@ import 'package:myapp/dialogs_stories_view/bloc/dialogs_stories_view_bloc.dart';
 import 'package:myapp/dialogs_stories_view/widgets/text_card.dart';
 import 'package:myapp/dialogs_stories_view/widgets/text_list.dart';
 
-class DialogsStoriesView extends StatelessWidget {
-  const DialogsStoriesView({super.key, required this.deckId});
+class DialogsStoriesPage extends StatelessWidget {
+  const DialogsStoriesPage({super.key, required this.deckId});
 
   final String deckId;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DialogsStoriesViewBloc(
-        dialogsRepository: context.read<DialogsRepository>(),
-        storiesRepository: context.read<StoriesRepository>(),
-        geminiRepository: context.read<GeminiRepository>(),
-      )..add(const DialogsStoriesViewInitial()),
-      child: CardsOverviewView(deckId: deckId),
-    );
+    return DialogsStoriesView(deckId: deckId);
   }
 }
 
-class CardsOverviewView extends StatelessWidget {
-  const CardsOverviewView({super.key, required this.deckId});
+class DialogsStoriesView extends StatelessWidget {
+  const DialogsStoriesView({super.key, required this.deckId});
 
   final String deckId;
 
@@ -68,7 +61,7 @@ class CardsOverviewView extends StatelessWidget {
           //         child: const Text('No cards found.'),
           //       ),
           //     );
-          //   }
+          //   }Agro
           // }
 
           final List<Widget> texts = state.texts.map((text) {
@@ -76,14 +69,6 @@ class CardsOverviewView extends StatelessWidget {
               text: text,
             );
           }).toList();
-
-          if (texts.length == 1) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-              alignment: Alignment.center,
-              child: texts[0],
-            );
-          }
 
           return TextList(texts: texts);
         },

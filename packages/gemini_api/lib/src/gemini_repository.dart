@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:decks_repository/decks_repository.dart';
+import 'package:gemini_api/src/models/text_generated_model.dart';
 import 'package:gemini_api/src/models/word_generated_model.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:uuid/uuid.dart';
 
 class GeminiRepository {
   const GeminiRepository({
@@ -30,11 +32,19 @@ output:{"word": "Angaben", "translate": "information, details, specifications", 
   }
 
   Future<DialogModel> generateDialog(String theme) async {
-    final prompt = '''Create dialog in German for theme "$theme" max 500 words
+    final prompt =
+        '''Create dialog in German for theme "$theme". Translate dialog to English 
 input: Create dialog in German for theme "Rent apartments" max 500 words
 output:{"theme": "Wohnungssuche in Berlin", "text": ["Szene: Zwei Freunde, Anna und Max, sitzen in einem Café in Berlin.", "Anna: Max, ich bin so fertig mit der Wohnungssuche! Ich hab schon seit Wochen unzählige Anzeigen durchgeblättert, aber nichts Passendes gefunden.", "Max: Ich verstehe dich. Berlin ist ja auch nicht gerade günstig. Und die Konkurrenz ist riesig. Hast du schon bei Immobilienscout oder Immowelt geschaut?"], translate:["Scene: Two friends, Anna and Max, are sitting in a café in Berlin.", "Anna: Max, I'm so exhausted from apartment hunting! I've been flipping through countless listings for weeks, but haven't found anything suitable.", "Max: I understand. Berlin isn't exactly cheap. And the competition is huge. Have you checked Immobilienscout or Immowelt?"]}''';
     final content = [Content.text(prompt)];
-    final response = await _model.generateContent(content);
+    final response = await _model.generateContent(content,
+        generationConfig: GenerationConfig(
+            responseMimeType: 'application/json',
+            responseSchema: Schema.object(properties: {
+              'theme': Schema.string(),
+              'text': Schema.array(items: Schema.string()),
+              'translate': Schema.array(items: Schema.string()),
+            })));
 
     var jsonString =
         response.text!.replaceAll('json', '').replaceAll("```", '').trim();
@@ -42,17 +52,26 @@ output:{"theme": "Wohnungssuche in Berlin", "text": ["Szene: Zwei Freunde, Anna 
     log(jsonString);
     Map<String, dynamic> modelJson = json.decode(jsonString);
 
-    return DialogModel.fromJson(modelJson);
+    var generatedDialog = TextGeneratedModel.fromJson(modelJson);
+
+    return DialogModel(
+        text: generatedDialog.text,
+        theme: generatedDialog.theme,
+        translate: generatedDialog.translate,
+        id: const Uuid().v4(),
+        deckId: '');
   }
 
   Future<StoryModel> generateStory(String theme) async {
     final prompt =
         '''Create story in German for theme "${theme}" max 300 words with translation to english
 input: Create story in German for theme "Toy boy" max 300 words
-output:{"theme": "Die Puppe und der Spieler", "text": "Der Duft von Vanille und frisch gebrühtem Kaffee lag in der Luft, als Leo die Bar betrat. In seinem grauen Anzug wirkte er wie ein Raubtier, das in das Revier eines anderen eindrang. Doch sein Blick, der sich über den Raum glitt, verriet eine Unsicherheit. Er suchte, suchte sie.
-Er hatte sie vor zwei Wochen in dieser Bar getroffen. Sie hatte blonde, wallende Haare, die wie ein Wasserfall über ihre Schultern fielen, und Augen, die in einem tiefen Blau schimmerten, wie das Meer an einem stürmischen Tag. Ihre Haut war samtig weich und ihr Lächeln strahlte eine jugendliche Energie aus, die ihn in ihren Bann gezogen hatte. Sie hieß Clara und war, wie er später erfuhr, zwanzig Jahre älter als er.", "translate":"The scent of vanilla and freshly brewed coffee hung in the air as Leo entered the bar. In his gray suit, he looked like a predator intruding on another's territory. But his gaze, which swept across the room, betrayed a sense of uncertainty. He searched, for her.", "He had met her in this bar two weeks ago. She had blonde, flowing hair that cascaded over her shoulders like a waterfall, and eyes that shimmered a deep blue, like the sea on a stormy day. Her skin was velvety soft, and her smile radiated a youthful energy that had captivated him. Her name was Clara, and, as he later learned, she was twenty years older than him."], "translate": ["The aroma of vanilla and freshly brewed coffee filled the air as Leo entered the bar. In his gray suit, he resembled a predator encroaching on another's domain. Yet, his eyes, which scanned the room, revealed an air of uncertainty. He searched, for her.", "He had met her in this bar two weeks prior. She possessed blonde, flowing hair that cascaded over her shoulders like a waterfall, and eyes that shimmered a deep blue, like the sea during a tempest. Her skin was velvety soft, and her smile exuded a youthful energy that had captivated him. Her name was Clara, and, as he later discovered, she was twenty years his senior."}''';
+output:{"theme": "Die Puppe und der Spieler", "text": ["Der Duft von Vanille und frisch gebrühtem Kaffee lag in der Luft, als Leo die Bar betrat. In seinem grauen Anzug wirkte er wie ein Raubtier, das in das Revier eines anderen eindrang. Doch sein Blick, der sich über den Raum glitt, verriet eine Unsicherheit. Er suchte, suchte sie.
+Er hatte sie vor zwei Wochen in dieser Bar getroffen. Sie hatte blonde, wallende Haare, die wie ein Wasserfall über ihre Schultern fielen, und Augen, die in einem tiefen Blau schimmerten, wie das Meer an einem stürmischen Tag. Ihre Haut war samtig weich und ihr Lächeln strahlte eine jugendliche Energie aus, die ihn in ihren Bann gezogen hatte. Sie hieß Clara und war, wie er später erfuhr, zwanzig Jahre älter als er."], "translate":["The scent of vanilla and freshly brewed coffee hung in the air as Leo entered the bar. In his gray suit, he looked like a predator intruding on another's territory. But his gaze, which swept across the room, betrayed a sense of uncertainty. He searched, for her.", "He had met her in this bar two weeks ago. She had blonde, flowing hair that cascaded over her shoulders like a waterfall, and eyes that shimmered a deep blue, like the sea on a stormy day. Her skin was velvety soft, and her smile radiated a youthful energy that had captivated him. Her name was Clara, and, as he later learned, she was twenty years older than him."], "translate": ["The aroma of vanilla and freshly brewed coffee filled the air as Leo entered the bar. In his gray suit, he resembled a predator encroaching on another's domain. Yet, his eyes, which scanned the room, revealed an air of uncertainty. He searched, for her.", "He had met her in this bar two weeks prior. She possessed blonde, flowing hair that cascaded over her shoulders like a waterfall, and eyes that shimmered a deep blue, like the sea during a tempest. Her skin was velvety soft, and her smile exuded a youthful energy that had captivated him. Her name was Clara, and, as he later discovered, she was twenty years his senior."]}''';
     final content = [Content.text(prompt)];
-    final response = await _model.generateContent(content);
+    final response = await _model.generateContent(content,
+        generationConfig:
+            GenerationConfig(responseMimeType: 'application/json'));
 
     var jsonString =
         response.text!.replaceAll('json', '').replaceAll("```", '').trim();
@@ -60,6 +79,13 @@ Er hatte sie vor zwei Wochen in dieser Bar getroffen. Sie hatte blonde, wallende
     log(jsonString);
     Map<String, dynamic> modelJson = json.decode(jsonString);
 
-    return StoryModel.fromJson(modelJson);
+    var generatedText = TextGeneratedModel.fromJson(modelJson);
+
+    return StoryModel(
+        text: generatedText.text,
+        theme: generatedText.theme,
+        translate: generatedText.translate,
+        id: const Uuid().v4(),
+        deckId: '');
   }
 }
