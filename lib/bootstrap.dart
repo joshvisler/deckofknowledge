@@ -27,9 +27,7 @@ void bootstrap(
   final storiesRepository = StoriesRepository(storiesApi: storiesApi);
 
   final geminiRepository = GeminiRepository(
-      model: GenerativeModel(
-          model: 'gemini-1.5-flash',
-          apiKey: 'AIzaSyCGK2e06tPThZU0nXV1f14ugAiYxEZ3nnI'));
+      model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: ''));
 
   runZonedGuarded(
     () => runApp(App(
