@@ -26,8 +26,15 @@ Deck - is folder for cards, stories and dialogs.
 Flashcard - card for learning new word.
 Story and Dialog - its short text for up your skill in reading
 
-**Create Deck**
+## **Create Deck**
 
-**Create Card & Cards view**
+![enter image description here](https://github.com/joshvisler/deckofknowledge/blob/main/docs/images/create_deck.gif)
 
-**Create Dialog and Story**
+## **Create Card & Cards view**
+
+![enter image description here](https://github.com/joshvisler/deckofknowledge/blob/main/docs/images/cards.gif)
+
+## **Create Dialog and Story**
+
+![enter image description here](https://github.com/joshvisler/deckofknowledge/blob/main/docs/images/create_story.gif)
+![enter image description here](https://github.com/joshvisler/deckofknowledge/blob/main/docs/images/dialog_story_view.gif)
