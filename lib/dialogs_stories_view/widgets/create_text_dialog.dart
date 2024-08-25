@@ -10,13 +10,7 @@ class CreateTextDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => DialogsStoriesViewBloc(
-              dialogsRepository: context.read<DialogsRepository>(),
-              storiesRepository: context.read<StoriesRepository>(),
-              geminiRepository: context.read<GeminiRepository>(),
-            ),
-        child: Dialog.fullscreen(
+    return  Dialog.fullscreen(
           child: Scaffold(
             appBar: AppBar(
               title: const Text('Create Text'),
@@ -32,6 +26,7 @@ class CreateTextDialog extends StatelessWidget {
                 if (state.status == DialogsStoriesViewStatus.success) {
                   Navigator.of(context).pop();
                 }
+                
                 if (state.status == DialogsStoriesViewStatus.failure) {
                   ScaffoldMessenger.of(context)
                     ..hideCurrentSnackBar()
@@ -45,6 +40,11 @@ class CreateTextDialog extends StatelessWidget {
               child:
                   BlocBuilder<DialogsStoriesViewBloc, DialogsStoriesViewState>(
                 builder: (context, state) {
+                  if(state.status == DialogsStoriesViewStatus.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+
                   return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,6 +110,6 @@ class CreateTextDialog extends StatelessWidget {
               ),
             ),
           ),
-        ));
+        );
   }
 }

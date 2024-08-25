@@ -12,6 +12,8 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     on<DecksInitial>(_onInitial);
     on<CreateDeck>(_onCreateDeck);
     on<CreateDeckTitleChanged>(_onCreateDeckTitleChanged);
+    on<CreateDeckLanguageFromChanged>(_onCreateDeckLanguageFromChanged);
+    on<CreateDeckLanguageToChanged>(_onCreateDeckLanguageToChanged);
     on<TabChanged>(_onTabChanged);
   }
 
@@ -45,7 +47,7 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
       throw Exception('Name is empty');
     }
 
-    var deck = DeckModel(title: state.title);
+    var deck = DeckModel(title: state.title, languageFrom: state.languageFrom, languageTo: state.languageTo);
 
     await _decksRepository.add(deck).onError((error, stackTrace) {
       emit(state.copyWith(status: () => DecksViewStatus.failure));
@@ -76,5 +78,19 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
   ) async {
     emit(state.copyWith(
         currentTab: () => event.index == 0 ? TabType.cards : TabType.texts));
+  }
+
+  Future<void> _onCreateDeckLanguageFromChanged(
+    CreateDeckLanguageFromChanged event,
+    Emitter<DecksState> emit,
+  ) async {
+    emit(state.copyWith(languageFrom: () => event.language));
+  }
+
+  Future<void> _onCreateDeckLanguageToChanged(
+    CreateDeckLanguageToChanged event,
+    Emitter<DecksState> emit,
+  ) async {
+    emit(state.copyWith(languageTo: () => event.language));
   }
 }

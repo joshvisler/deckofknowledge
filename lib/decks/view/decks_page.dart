@@ -26,7 +26,7 @@ class DecksView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton.small(
+        floatingActionButton: FloatingActionButton(
             shape: const ContinuousRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),

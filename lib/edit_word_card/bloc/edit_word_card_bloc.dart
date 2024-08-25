@@ -11,9 +11,11 @@ part 'edit_word_card_state.dart';
 class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
   EditWordCardBloc(
       {required CardsRepository cardsRepository,
+      required DecksRepository decksRepository,
       required GeminiRepository geminiRepository})
       : _cardsRepository = cardsRepository,
         _geminiRepository = geminiRepository,
+        _decksRepository = decksRepository,
         super(const EditWordCardState()) {
     on<EditWordCardSubscriptionRequested>(_onSubscriptionRequested);
     on<EditWordCardGenerateCard>(_onGenerateCard);
@@ -23,6 +25,7 @@ class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
 
   final CardsRepository _cardsRepository;
   final GeminiRepository _geminiRepository;
+  final DecksRepository _decksRepository;
 
   Future<void> _onSubscriptionRequested(
     EditWordCardSubscriptionRequested event,
@@ -42,9 +45,10 @@ class EditWordCardBloc extends Bloc<EditWordCardEvent, EditWordCardState> {
     emit(state.copyWith(status: () => EditCardStatus.generating));
 
     var newCard = SplashCardModel(word: state.wordText, deckId: event.deckId);
+    var deck = (await _decksRepository.get().first).firstWhere((d) => d.id ==  event.deckId);
 
     await _geminiRepository
-        .generateCard(state.wordText)
+        .generateCard(state.wordText, deck.languageFrom, deck.languageTo)
         .then((wordCard) => {
               newCard = newCard.copyWith(
                   translate: wordCard.translate,

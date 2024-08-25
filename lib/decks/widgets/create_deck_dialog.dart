@@ -2,9 +2,10 @@ import 'package:decks_repository/decks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/decks/bloc/decks_bloc.dart';
+import 'package:myapp/utils/languages_picker/widgets/language_picker_dialog.dart';
 
 class CreateDeckDialog extends StatelessWidget {
-  const CreateDeckDialog({Key? key}) : super(key: key);
+  const CreateDeckDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +48,81 @@ class CreateDeckDialog extends StatelessWidget {
                         right: 24,
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
-                      child: Column(children: [
-                        TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter a search term',
-                          ),
-                          onChanged: (value) => context
-                              .read<DecksBloc>()
-                              .add(CreateDeckTitleChanged(value)),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 24),
-                            child: Center(
-                                child: FilledButton(
-                                    onPressed: state.title.isEmpty
-                                        ? null
-                                        : () => context
-                                            .read<DecksBloc>()
-                                            .add(const CreateDeck()),
-                                    child: const Text('Save'))))
-                      ]));
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TextField(
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Deck title',
+                              ),
+                              onChanged: (value) => context
+                                  .read<DecksBloc>()
+                                  .add(CreateDeckTitleChanged(value)),
+                            ),
+                            const SizedBox(height: 24),
+                            Text(
+                              'Cards language',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FilledButton(
+                                  onPressed: () => showDialog(
+                                      context: context,
+                                      builder:
+                                          (BuildContext showDialogContext) =>
+                                              BlocProvider.value(
+                                                value:
+                                                    context.read<DecksBloc>(),
+                                                child: LanguagePickerDialog(
+                                                    selectedLanguage:
+                                                        state.languageFrom,
+                                                    onValuePicked: (value) =>
+                                                        context
+                                                            .read<DecksBloc>()
+                                                            .add(
+                                                                CreateDeckLanguageFromChanged(
+                                                                    value))),
+                                              )),
+                                  child: Text(state.languageFrom),
+                                ),
+                                Icon(Icons.swap_horiz),
+                                FilledButton(
+                                  onPressed: () => showDialog(
+                                      context: context,
+                                      builder:
+                                          (BuildContext showDialogContext) =>
+                                              BlocProvider.value(
+                                                value:
+                                                    context.read<DecksBloc>(),
+                                                child: LanguagePickerDialog(
+                                                    selectedLanguage:
+                                                        state.languageTo,
+                                                    onValuePicked: (value) =>
+                                                        context
+                                                            .read<DecksBloc>()
+                                                            .add(
+                                                                CreateDeckLanguageToChanged(
+                                                                    value))),
+                                              )),
+                                  child: Text(state.languageTo),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 24),
+                                child: Center(
+                                    child: FilledButton(
+                                        onPressed: state.title.isEmpty
+                                            ? null
+                                            : () => context
+                                                .read<DecksBloc>()
+                                                .add(const CreateDeck()),
+                                        child: const Text('Save'))))
+                          ]));
                 },
               ),
             ),

@@ -27,3 +27,15 @@ final class TabChanged extends DecksEvent {
   final int index;
 }
 
+final class CreateDeckLanguageFromChanged extends DecksEvent {
+  const CreateDeckLanguageFromChanged(this.language);
+
+  final String language;
+}
+
+final class CreateDeckLanguageToChanged extends DecksEvent {
+  const CreateDeckLanguageToChanged(this.language);
+
+  final String language;
+}
+

@@ -8,7 +8,9 @@ sealed class DialogsStoriesViewEvent extends Equatable {
 }
 
 final class DialogsStoriesViewInitial extends DialogsStoriesViewEvent {
-  const DialogsStoriesViewInitial();
+  const DialogsStoriesViewInitial(this.deckId);
+
+  final String deckId;
 }
 
 final class DialogsStoriesGenerate extends DialogsStoriesViewEvent {

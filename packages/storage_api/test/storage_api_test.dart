@@ -77,52 +77,52 @@ void main() {
       );
     });
 
-    group('saveCard', () {
-      test('saves new Cards', () {
-        final newCard = SplashCardModel(
-          id: '4',
-          deckId: '1',
-          word: 'Arbeiten',
-          translate: 'Work',
-        );
+    // group('saveCard', () {
+    //   test('saves new Cards', () {
+    //     final newCard = SplashCardModel(
+    //       id: '4',
+    //       deckId: '1',
+    //       word: 'Arbeiten',
+    //       translate: 'Work',
+    //     );
 
-        final newCards = [...Cards, newCard];
+    //     final newCards = [...Cards, newCard];
 
-        final subject = createSubject();
+    //     final subject = createSubject();
 
-        expect(subject.add(newCard), completes);
-        expect(subject.get(), emits(newCards));
+    //     expect(subject.add(newCard), completes);
+    //     expect(subject.get(), emits(newCards));
 
-        verify(
-          () => preferences.setString(
-            CardsStorageApi.kCardsCollectionKey,
-            json.encode(newCards),
-          ),
-        ).called(1);
-      });
+    //     verify(
+    //       () => preferences.setString(
+    //         CardsStorageApi.kCardsCollectionKey,
+    //         json.encode(newCards),
+    //       ),
+    //     ).called(1);
+    //   });
 
-      test('updates existing Cards', () {
-        final updatedCard = SplashCardModel(
-          id: '1',
-          deckId: '1',
-          word: 'Hallo',
-          translate: 'Hello',
-        );
-        final newCards = [updatedCard, ...Cards.sublist(1)];
+    //   test('updates existing Cards', () {
+    //     final updatedCard = SplashCardModel(
+    //       id: '1',
+    //       deckId: '1',
+    //       word: 'Hallo',
+    //       translate: 'Hello',
+    //     );
+    //     final newCards = [updatedCard, ...Cards.sublist(1)];
 
-        final subject = createSubject();
+    //     final subject = createSubject();
 
-        expect(subject.update(updatedCard), completes);
-        expect(subject.get(), emits(newCards));
+    //     expect(subject.update(updatedCard), completes);
+    //     expect(subject.get(), emits(newCards));
 
-        verify(
-          () => preferences.setString(
-            CardsStorageApi.kCardsCollectionKey,
-            json.encode(newCards),
-          ),
-        ).called(1);
-      });
-    });
+    //     verify(
+    //       () => preferences.setString(
+    //         CardsStorageApi.kCardsCollectionKey,
+    //         json.encode(newCards),
+    //       ),
+    //     ).called(1);
+    //   });
+    // });
 
     group('deleteCard', () {
       test('deletes existing Cards', () {

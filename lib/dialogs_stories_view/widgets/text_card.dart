@@ -16,7 +16,7 @@ class TextCard extends StatelessWidget {
               builder: (BuildContext context) => Dialog.fullscreen(
                   child: text.type == TextType.dialog
                       ? DialogView(dialog: text)
-                      : StoryView(story: text)),
+                      : StoryViewPage(story: text)),
             ),
         child: Card(
           child: Padding(
@@ -24,10 +24,10 @@ class TextCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                     radius: 30,
                     child: Icon(
-                      Icons.style,
+                      text.type == TextType.dialog ? Icons.forum : Icons.auto_stories,
                       size: 36,
                       color: Colors.white,
                     )),
@@ -37,12 +37,14 @@ class TextCard extends StatelessWidget {
                   children: [
                     Text(
                       text.theme,
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('${text.type}'),
+                    Text('${text.type.name}'),
                   ],
                 )
               ],

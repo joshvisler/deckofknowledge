@@ -30,26 +30,34 @@ class DeckCard extends StatelessWidget {
                       color: Colors.white,
                     )),
                 const SizedBox(width: 16),
-                Column(
+                Expanded(child:Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                     Text(
+                          overflow: TextOverflow.fade,
                       deck.title,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                    Row(
                       children: [
-                        Text('${deck.cardsNumber} Cards, '),
-                        Text('${deck.dialogsNumber} Dialogs, '),
-                        Text('${deck.storiesNumber} Stories')
+                        Text(
+                          deck.languageFrom,
+                          softWrap: true,
+                        ),
+                        const Icon(
+                          Icons.swap_horiz,
+                          size: 16,
+                        ),
+                        Text(
+                          deck.languageTo,
+                        ),
                       ],
                     )
                   ],
-                )
+                ))
               ],
             ),
           ),

@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gemini_api/gemini_api.dart';
 import 'package:myapp/dialogs_stories_view/models/dialog_story_model.dart';
 
+import 'package:meta/meta.dart';
+import 'package:uuid/uuid.dart';
+
 part 'dialogs_stories_view_event.dart';
 part 'dialogs_stories_view_state.dart';
 
@@ -12,11 +15,14 @@ class DialogsStoriesViewBloc
   DialogsStoriesViewBloc(
       {required DialogsRepository dialogsRepository,
       required StoriesRepository storiesRepository,
-      required GeminiRepository geminiRepository})
+      required GeminiRepository geminiRepository,
+      required DecksRepository decksRepository
+      })
       : _dialogsRepository = dialogsRepository,
         _storiesRepository = storiesRepository,
         _geminiRepository = geminiRepository,
-        super(const DialogsStoriesViewState()) {
+        _decksRepository = decksRepository,
+        super(DialogsStoriesViewState()) {
     on<DialogsStoriesViewInitial>(_onInitial);
     on<DialogsStoriesGenerate>(_onGenerate);
     on<DialogsStoriesThemeChanged>(_onThemeChanged);
@@ -26,6 +32,7 @@ class DialogsStoriesViewBloc
   final DialogsRepository _dialogsRepository;
   final StoriesRepository _storiesRepository;
   final GeminiRepository _geminiRepository;
+  final DecksRepository _decksRepository;
 
   Future<void> _onInitial(
     DialogsStoriesViewInitial event,
@@ -44,7 +51,8 @@ class DialogsStoriesViewBloc
 
     emit(state.copyWith(
         status: () => DialogsStoriesViewStatus.initial,
-        texts: () => dialogsStories));
+        texts: () => dialogsStories,
+        deckId: () => event.deckId));
   }
 
   Future<void> _onGenerate(
@@ -53,21 +61,46 @@ class DialogsStoriesViewBloc
   ) async {
     emit(state.copyWith(status: () => DialogsStoriesViewStatus.loading));
 
+    var texts = state.texts.toList();
+    var deck = (await _decksRepository.get().first).firstWhere((d) => d.id ==  state.deckId);
+
     if (event.type == TextType.dialog) {
-      var model = await _geminiRepository.generateDialog(event.theme);
-      await _dialogsRepository.add(model);
-      var text = DialogStoryModel.copyWithDialog(dialog: model);
-      state.texts.add(text);
+      var model = await _geminiRepository.generateDialog(event.theme, deck.languageFrom, deck.languageTo);
+      var text = DialogStoryModel(
+          deckId: state.deckId,
+          id: model.id,
+          text: model.text,
+          theme: model.theme,
+          translate: model.translate,
+          type: TextType.dialog);
+      var dialog = DialogModel(
+          text: text.text,
+          translate: text.translate,
+          theme: text.theme,
+          deckId: text.deckId);
+      await _dialogsRepository.add(dialog);
+      texts.add(text);
     } else {
-      var model = await _geminiRepository.generateStory(event.theme);
-      await _storiesRepository.add(model);
-      var text = DialogStoryModel.copyWithStory(story: model);
-      state.texts.add(text);
+      var model = await _geminiRepository.generateStory(event.theme, deck.languageFrom, deck.languageTo);
+      var text = DialogStoryModel(
+          deckId: state.deckId,
+          id: model.id,
+          text: model.text,
+          theme: model.theme,
+          translate: model.translate,
+          type: TextType.story);
+      var story = StoryModel(
+          text: text.text,
+          translate: text.translate,
+          theme: text.theme,
+          deckId: text.deckId);
+
+      await _storiesRepository.add(story);
+      texts.add(text);
     }
 
     emit(state.copyWith(
-        status: () => DialogsStoriesViewStatus.initial,
-        texts: () => state.texts));
+        status: () => DialogsStoriesViewStatus.success, texts: () => texts));
   }
 
   Future<void> _onThemeChanged(

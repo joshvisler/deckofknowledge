@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'story_model.dart';
+part of 'text_generated_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-StoryModel _$StoryModelFromJson(Map<String, dynamic> json) => StoryModel(
-      text: (json['text'] as List<dynamic>).map((e) => e as String).toList(),
+TextGeneratedModel _$TextGeneratedModelFromJson(Map<String, dynamic> json) =>
+    TextGeneratedModel(
       theme: json['theme'] as String,
-      deckId: json['deckId'] as String,
-      id: json['id'] as String?,
+      text:
+          (json['text'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
       translate: (json['translate'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
     );
 
-Map<String, dynamic> _$StoryModelToJson(StoryModel instance) =>
+Map<String, dynamic> _$TextGeneratedModelToJson(TextGeneratedModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'deckId': instance.deckId,
-      'text': instance.text,
-      'translate': instance.translate,
       'theme': instance.theme,
+      'translate': instance.translate,
+      'text': instance.text,
     };

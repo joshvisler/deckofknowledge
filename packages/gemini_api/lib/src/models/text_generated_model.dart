@@ -4,50 +4,45 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
-part 'story_model.g.dart';
+part 'text_generated_model.g.dart';
 
 @immutable
 @JsonSerializable()
-class StoryModel extends Equatable {
-  StoryModel({
-    required this.text,
-    required this.theme,
-    required this.deckId,
+class TextGeneratedModel extends Equatable {
+  TextGeneratedModel({
     String? id,
+    required this.theme,
+    this.text = const [],
     this.translate = const [],
-  })  : assert(
+  }): assert(
           id == null || id.isNotEmpty,
           'id must either be null or not empty',
         ),
         id = id ?? const Uuid().v4();
 
-  final String id;
-  final String deckId;
-  final List<String> text;
-  final List<String> translate;
   final String theme;
+  final String id;
+  final List<String> translate;
+  final List<String> text;
 
-  StoryModel copyWith({
-    String? id,
-    String? deckId,
-    List<String>? text,
+  TextGeneratedModel copyWith({
     String? theme,
     List<String>? translate,
+    List<String>? text
   }) {
-    return StoryModel(
-      id: id ?? this.id,
-      deckId: deckId ?? this.deckId,
-      text: text ?? this.text,
+    return TextGeneratedModel(
       theme: theme ?? this.theme,
       translate: translate ?? this.translate,
+      text: text ?? this.text,
     );
   }
 
-  static StoryModel fromJson(Map<String, dynamic> json) =>
-      _$StoryModelFromJson(json);
+  static TextGeneratedModel fromJson(Map<String, dynamic> json) =>
+      _$TextGeneratedModelFromJson(json);
 
-  JsonMap toJson() => _$StoryModelToJson(this);
+  JsonMap toJson() => _$TextGeneratedModelToJson(this);
 
   @override
-  List<Object> get props => [id, deckId, text, translate, theme];
+  List<Object> get props =>
+      [theme, translate, text];
 }

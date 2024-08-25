@@ -11,6 +11,8 @@ part 'deck_model.g.dart';
 class DeckModel extends Equatable {
   DeckModel(
       {required this.title,
+      this.languageFrom = 'German',
+      this.languageTo = 'English',
       String? id,
       this.cardsNumber = 0,
       this.storiesNumber = 0,
@@ -23,6 +25,8 @@ class DeckModel extends Equatable {
 
   final String id;
   final String title;
+  final String languageFrom;
+  final String languageTo;
   final int cardsNumber;
   final int storiesNumber;
   final int dialogsNumber;
@@ -30,6 +34,7 @@ class DeckModel extends Equatable {
   DeckModel copyWith({
     String? id,
     String? title,
+    String? language,
     int? cardsNumber,
     int? storiesNumber,
     int? dialogsNumber,
@@ -37,6 +42,8 @@ class DeckModel extends Equatable {
     return DeckModel(
       id: id ?? this.id,
       title: title ?? this.title,
+      languageFrom: language ?? languageFrom,
+      languageTo: language ?? languageTo,
       cardsNumber: cardsNumber ?? this.cardsNumber,
       storiesNumber: storiesNumber ?? this.storiesNumber,
       dialogsNumber: dialogsNumber ?? this.dialogsNumber,
@@ -50,5 +57,5 @@ class DeckModel extends Equatable {
 
   @override
   List<Object> get props =>
-      [id, title, cardsNumber, storiesNumber, dialogsNumber];
+      [id, title,languageFrom, languageTo, cardsNumber, storiesNumber, dialogsNumber];
 }

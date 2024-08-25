@@ -23,6 +23,7 @@ class EditWordCard extends StatelessWidget {
     return BlocProvider(
       create: (context) => EditWordCardBloc(
         cardsRepository: context.read<CardsRepository>(),
+        decksRepository: context.read<DecksRepository>(),
         geminiRepository: context.read<GeminiRepository>(),
       )..add(EditWordCardSubscriptionRequested(isCreatingMode, card)),
       child: EditWordCardDialog(

@@ -13,14 +13,7 @@ class DialogsStoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DialogsStoriesViewBloc(
-        dialogsRepository: context.read<DialogsRepository>(),
-        storiesRepository: context.read<StoriesRepository>(),
-        geminiRepository: context.read<GeminiRepository>(),
-      )..add(const DialogsStoriesViewInitial()),
-      child: CardsOverviewView(deckId: deckId),
-    );
+    return CardsOverviewView(deckId: deckId);
   }
 }
 
@@ -76,14 +69,6 @@ class CardsOverviewView extends StatelessWidget {
               text: text,
             );
           }).toList();
-
-          if (texts.length == 1) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-              alignment: Alignment.center,
-              child: texts[0],
-            );
-          }
 
           return TextList(texts: texts);
         },
