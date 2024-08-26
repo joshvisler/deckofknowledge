@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:decks_repository/decks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gemini_api/gemini_api.dart';
 import 'package:myapp/cards_overview/bloc/cards_overview_bloc.dart';
+import 'package:gemini_api/gemini_api.dart';
+import 'package:myapp/cards_overview/bloc/cards_overview_bloc.dart';
 import 'package:myapp/cards_overview/view/cards_overview_page.dart';
 import 'package:myapp/decks/bloc/decks_bloc.dart';
+import 'package:myapp/dialogs_stories_view/bloc/dialogs_stories_view_bloc.dart';
 import 'package:myapp/dialogs_stories_view/bloc/dialogs_stories_view_bloc.dart';
 import 'package:myapp/dialogs_stories_view/view/dialogs_stories_view.dart';
 import 'package:myapp/dialogs_stories_view/widgets/create_text_dialog.dart';
@@ -98,4 +103,5 @@ class DeckView extends StatelessWidget {
                   ));
             }));
   }
+
 }

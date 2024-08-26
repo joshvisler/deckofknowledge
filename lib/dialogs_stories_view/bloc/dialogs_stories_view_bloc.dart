@@ -22,7 +22,7 @@ class DialogsStoriesViewBloc
         _storiesRepository = storiesRepository,
         _geminiRepository = geminiRepository,
         _decksRepository = decksRepository,
-        super(DialogsStoriesViewState()) {
+        super(DialogsStoriesViewState(deckId: '')) {
     on<DialogsStoriesViewInitial>(_onInitial);
     on<DialogsStoriesGenerate>(_onGenerate);
     on<DialogsStoriesThemeChanged>(_onThemeChanged);

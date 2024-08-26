@@ -29,7 +29,7 @@ void bootstrap(
   final geminiRepository = GeminiRepository(
       model: GenerativeModel(
           model: 'gemini-1.5-flash',
-          apiKey: ''));
+          apiKey: 'AIzaSyAwOq-cobENpMzgMNsxAr4VXXh-HAciLDo'));
 
   runZonedGuarded(
     () => runApp(App(
@@ -37,8 +37,7 @@ void bootstrap(
         geminiRepository: geminiRepository,
         decksRepository: decksRepository,
         dialogsRepository: dialogsRepository,
-        storiesRepository: storiesRepository
-        )),
+        storiesRepository: storiesRepository)),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

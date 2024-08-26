@@ -5,6 +5,7 @@ import 'package:decks_repository/decks_repository.dart';
 import 'package:gemini_api/src/models/text_generated_model.dart';
 import 'package:gemini_api/src/models/word_generated_model.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:uuid/uuid.dart';
 
 class GeminiRepository {
   const GeminiRepository({

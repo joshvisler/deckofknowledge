@@ -4,11 +4,11 @@ enum DialogsStoriesViewStatus { initial, loading, success, failure }
 
 final class DialogsStoriesViewState extends Equatable {
   const DialogsStoriesViewState(
-      {this.status = DialogsStoriesViewStatus.initial,
+      {required this.deckId,
+      this.status = DialogsStoriesViewStatus.initial,
       this.texts = const [],
       this.selectedType = TextType.story,
-      this.theme = '',
-      this.deckId = '',});
+      this.theme = ''});
 
   final List<DialogStoryModel> texts;
   final DialogsStoriesViewStatus status;
@@ -24,11 +24,11 @@ final class DialogsStoriesViewState extends Equatable {
     String Function()? deckId,
   }) {
     return DialogsStoriesViewState(
+      deckId: deckId != null ? deckId() : this.deckId,
       status: status != null ? status() : this.status,
       texts: texts != null ? texts() : this.texts,
       selectedType: selectedType != null ? selectedType() : this.selectedType,
-      theme: theme != null ? theme() : this.theme,
-      deckId: deckId != null ? deckId() : this.deckId,
+      theme: theme != null ? theme() : this.theme
     );
   }
 
