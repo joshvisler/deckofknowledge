@@ -29,7 +29,7 @@ void bootstrap(
   final geminiRepository = GeminiRepository(
       model: GenerativeModel(
           model: 'gemini-1.5-flash',
-          apiKey: 'AIzaSyAwOq-cobENpMzgMNsxAr4VXXh-HAciLDo'));
+          apiKey: ''));
 
   runZonedGuarded(
     () => runApp(App(
