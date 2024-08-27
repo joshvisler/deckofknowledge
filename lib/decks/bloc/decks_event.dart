@@ -38,4 +38,3 @@ final class CreateDeckLanguageToChanged extends DecksEvent {
 
   final String language;
 }
-

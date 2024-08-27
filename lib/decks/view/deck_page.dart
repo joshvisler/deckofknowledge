@@ -68,16 +68,17 @@ class DeckView extends StatelessWidget {
                       ),
                       onPressed: () => showDialog(
                           context: context,
-                          builder: (BuildContext showDialogContext) => state.currentTab ==
-                                  TabType.cards
-                              ? EditWordCard(
-                                  isCreatingMode: true,
-                                  deckId: deck.id,
-                                )
-                              : BlocProvider.value(
-                                  value: context.read<DialogsStoriesViewBloc>(),
-                                  child: const CreateTextDialog(),
-                                )),
+                          builder: (BuildContext showDialogContext) =>
+                              state.currentTab == TabType.cards
+                                  ? EditWordCard(
+                                      isCreatingMode: true,
+                                      deckId: deck.id,
+                                    )
+                                  : BlocProvider.value(
+                                      value: context
+                                          .read<DialogsStoriesViewBloc>(),
+                                      child: const CreateTextDialog(),
+                                    )),
                       child: const Icon(Icons.add)),
                   appBar: AppBar(
                       title: Text(deck.title),
@@ -103,5 +104,4 @@ class DeckView extends StatelessWidget {
                   ));
             }));
   }
-
 }

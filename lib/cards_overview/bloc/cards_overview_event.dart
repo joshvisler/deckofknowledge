@@ -29,3 +29,14 @@ final class CardsOverviewSwaped extends CardsOverviewEvent {
 
   final int index;
 }
+
+
+final class ExportCardsFile extends CardsOverviewEvent {
+  const ExportCardsFile(this.cards);
+
+  final List<SplashCardModel> cards;
+}
+
+final class RestoreCardsFromFile extends CardsOverviewEvent {
+  const RestoreCardsFromFile();
+}

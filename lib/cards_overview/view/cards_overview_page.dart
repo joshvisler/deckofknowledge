@@ -82,18 +82,34 @@ class CardsOverviewView extends StatelessWidget {
             } else if (state.status != CardsOverviewStatus.success) {
               return const SizedBox();
             } else {
-              return Center(
-                child: TextButton(
-                  onPressed: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => EditWordCard(
-                      isCreatingMode: true,
-                      deckId: deckId,
-                    ),
-                  ),
-                  child: const Text('No cards found.'),
+              return Column(children: [
+                IconButton(
+                  icon: const Icon(Icons.download),
+                  tooltip: 'Export deck',
+                  onPressed: () => context
+                      .read<CardsOverviewBloc>()
+                      .add(ExportCardsFile(state.cards)),
                 ),
-              );
+                IconButton(
+                  icon: const Icon(Icons.upload),
+                  tooltip: 'Export deck',
+                  onPressed: () => context
+                      .read<CardsOverviewBloc>()
+                      .add(const RestoreCardsFromFile()),
+                ),
+                Center(
+                  child: TextButton(
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => EditWordCard(
+                        isCreatingMode: true,
+                        deckId: deckId,
+                      ),
+                    ),
+                    child: const Text('No cards found.'),
+                  ),
+                )
+              ]);
             }
           }
 
@@ -113,6 +129,20 @@ class CardsOverviewView extends StatelessWidget {
           }
 
           return Column(children: [
+            IconButton(
+              icon: const Icon(Icons.download),
+              tooltip: 'Export deck',
+              onPressed: () => context
+                  .read<CardsOverviewBloc>()
+                  .add(ExportCardsFile(state.cards)),
+            ),
+            IconButton(
+              icon: const Icon(Icons.upload),
+              tooltip: 'Export deck',
+              onPressed: () => context
+                  .read<CardsOverviewBloc>()
+                  .add(const RestoreCardsFromFile()),
+            ),
             Expanded(
                 flex: 10,
                 child: CardSwiper(

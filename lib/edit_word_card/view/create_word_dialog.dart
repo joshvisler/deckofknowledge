@@ -180,7 +180,19 @@ class EditWordCardDialog extends StatelessWidget {
                     )),
               );
             } else {
-              return const Text('Something wrong with card');
+              return Center(
+                  child: Column(
+                children: [
+                  Text('Something wrong with card'),
+                  FilledButton(
+                      onPressed: state.wordText == ''
+                          ? null
+                          : () => context
+                              .read<EditWordCardBloc>()
+                              .add(EditWordCardGenerateCard(deckId)),
+                      child: Text('Try again'))
+                ],
+              ));
             }
           },
         ),

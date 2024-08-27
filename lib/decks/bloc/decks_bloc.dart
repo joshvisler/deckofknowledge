@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:decks_repository/decks_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'decks_event.dart';
 part 'decks_state.dart';
@@ -47,7 +53,10 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
       throw Exception('Name is empty');
     }
 
-    var deck = DeckModel(title: state.title, languageFrom: state.languageFrom, languageTo: state.languageTo);
+    var deck = DeckModel(
+        title: state.title,
+        languageFrom: state.languageFrom,
+        languageTo: state.languageTo);
 
     await _decksRepository.add(deck).onError((error, stackTrace) {
       emit(state.copyWith(status: () => DecksViewStatus.failure));
