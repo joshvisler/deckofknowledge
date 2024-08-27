@@ -94,11 +94,16 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
 
     emit(state.copyWith(status: () => CardsOverviewStatus.loading));
 
-    final downloadPath = await getDownloadsDirectory();
+    final downloadPath = '/storage/emulated/0/Download/';
 
-    var file = File('${downloadPath!.path}/cards.json');
+    
+    if(!Directory('${downloadPath}/deckofknowledge/').existsSync())
+      Directory('${downloadPath}/deckofknowledge/').createSync();
 
-    await file.writeAsString(jsonEncode(event.cards));
+    var file = File('${downloadPath}/deckofknowledge/cards.json');
+    file.createSync();
+
+    file.writeAsStringSync(jsonEncode(event.cards));
 
     emit(state.copyWith(status: () => CardsOverviewStatus.success));
   }
@@ -109,7 +114,7 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
   ) async {
     emit(state.copyWith(status: () => CardsOverviewStatus.loading));
 
-    final downloadPath = await getDownloadsDirectory();
+    final downloadPath = await getApplicationDocumentsDirectory();
 
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(initialDirectory: downloadPath!.path);
