@@ -8,7 +8,9 @@ sealed class CardsOverviewEvent extends Equatable {
 }
 
 final class CardsOverviewInitial extends CardsOverviewEvent {
-  const CardsOverviewInitial();
+  const CardsOverviewInitial(this.deckId);
+
+  final String deckId;
 }
 
 final class CardsOverviewDeleted extends CardsOverviewEvent {
@@ -29,7 +31,6 @@ final class CardsOverviewSwaped extends CardsOverviewEvent {
 
   final int index;
 }
-
 
 final class ExportCardsFile extends CardsOverviewEvent {
   const ExportCardsFile(this.cards);

@@ -36,7 +36,7 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
       _cardsRepository.get(),
       onData: (cards) => state.copyWith(
         status: () => CardsOverviewStatus.success,
-        cards: () => cards,
+        cards: () => cards.where((c) => c.deckId == event.deckId).toList(),
       ),
       onError: (_, __) => state.copyWith(
         status: () => CardsOverviewStatus.failure,
