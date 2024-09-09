@@ -16,8 +16,7 @@ class DialogsStoriesViewBloc
       {required DialogsRepository dialogsRepository,
       required StoriesRepository storiesRepository,
       required GeminiRepository geminiRepository,
-      required DecksRepository decksRepository
-      })
+      required DecksRepository decksRepository})
       : _dialogsRepository = dialogsRepository,
         _storiesRepository = storiesRepository,
         _geminiRepository = geminiRepository,
@@ -51,7 +50,8 @@ class DialogsStoriesViewBloc
 
     emit(state.copyWith(
         status: () => DialogsStoriesViewStatus.initial,
-        texts: () => dialogsStories,
+        texts: () =>
+            dialogsStories.where((x) => x.deckId == event.deckId).toList(),
         deckId: () => event.deckId));
   }
 
@@ -62,10 +62,12 @@ class DialogsStoriesViewBloc
     emit(state.copyWith(status: () => DialogsStoriesViewStatus.loading));
 
     var texts = state.texts.toList();
-    var deck = (await _decksRepository.get().first).firstWhere((d) => d.id ==  state.deckId);
+    var deck = (await _decksRepository.get().first)
+        .firstWhere((d) => d.id == state.deckId);
 
     if (event.type == TextType.dialog) {
-      var model = await _geminiRepository.generateDialog(event.theme, deck.languageFrom, deck.languageTo);
+      var model = await _geminiRepository.generateDialog(
+          event.theme, deck.languageFrom, deck.languageTo);
       var text = DialogStoryModel(
           deckId: state.deckId,
           id: model.id,
@@ -81,7 +83,8 @@ class DialogsStoriesViewBloc
       await _dialogsRepository.add(dialog);
       texts.add(text);
     } else {
-      var model = await _geminiRepository.generateStory(event.theme, deck.languageFrom, deck.languageTo);
+      var model = await _geminiRepository.generateStory(
+          event.theme, deck.languageFrom, deck.languageTo);
       var text = DialogStoryModel(
           deckId: state.deckId,
           id: model.id,

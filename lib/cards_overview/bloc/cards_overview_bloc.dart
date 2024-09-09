@@ -96,8 +96,7 @@ class CardsOverviewBloc extends Bloc<CardsOverviewEvent, CardsOverviewState> {
 
     final downloadPath = '/storage/emulated/0/Download/';
 
-    
-    if(!Directory('${downloadPath}/deckofknowledge/').existsSync())
+    if (!Directory('${downloadPath}/deckofknowledge/').existsSync())
       Directory('${downloadPath}/deckofknowledge/').createSync();
 
     var file = File('${downloadPath}/deckofknowledge/cards.json');

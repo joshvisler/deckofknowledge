@@ -1,4 +1,3 @@
-import 'package:decks_repository/decks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -129,19 +128,30 @@ class CardsOverviewView extends StatelessWidget {
           }
 
           return Column(children: [
-            IconButton(
-              icon: const Icon(Icons.download),
-              tooltip: 'Export deck',
-              onPressed: () => context
-                  .read<CardsOverviewBloc>()
-                  .add(ExportCardsFile(state.cards)),
-            ),
-            IconButton(
-              icon: const Icon(Icons.upload),
-              tooltip: 'Export deck',
-              onPressed: () => context
-                  .read<CardsOverviewBloc>()
-                  .add(const RestoreCardsFromFile()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(children: [
+                  IconButton(
+                    icon: const Icon(Icons.download),
+                    tooltip: 'Export deck',
+                    onPressed: () => context
+                        .read<CardsOverviewBloc>()
+                        .add(ExportCardsFile(state.cards)),
+                  ),
+                  Text('Download')
+                ]),
+                Row(children: [
+                  IconButton(
+                    icon: const Icon(Icons.upload),
+                    tooltip: 'Export deck',
+                    onPressed: () => context
+                        .read<CardsOverviewBloc>()
+                        .add(const RestoreCardsFromFile()),
+                  ),
+                  Text('Import')
+                ]),
+              ],
             ),
             Expanded(
                 flex: 10,
@@ -149,6 +159,13 @@ class CardsOverviewView extends StatelessWidget {
                   cardsCount: state.cards.length,
                   controller: cardSwiperController,
                   onSwipe: (previousIndex, currentIndex, direction) {
+                    context
+                        .read<CardsOverviewBloc>()
+                        .add(CardsOverviewSwaped(currentIndex ?? 0));
+
+                    return true;
+                  },
+                  onUndo: (previousIndex, currentIndex, direction) {
                     context
                         .read<CardsOverviewBloc>()
                         .add(CardsOverviewSwaped(currentIndex ?? 0));
@@ -164,8 +181,10 @@ class CardsOverviewView extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               IconButton.filledTonal(
                   color: Color(0xFFF2E6D9),
-                  onPressed: () =>
-                      cardSwiperController.swipe(CardSwiperDirection.left),
+                  onPressed: () => {
+                        cardSwiperController.swipe(CardSwiperDirection.left),
+                        cardSwiperController.undo(),
+                      },
                   icon: Icon(Icons.arrow_left, color: Color(0xFFFFB763))),
               Text(
                   '${state.currentCardsSwapperIndex + 1}/${state.cards.length}'),

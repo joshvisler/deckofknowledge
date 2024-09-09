@@ -64,7 +64,11 @@ output:{"theme": "Wohnungssuche in Berlin", "text": ["Szene: Zwei Freunde, Anna 
               'theme': Schema.string(),
               'translate': Schema.array(items: Schema.string()),
               'text': Schema.array(items: Schema.string()),
-            })));
+            }, requiredProperties: [
+              "theme",
+              "translate",
+              "text"
+            ])));
 
     var jsonString =
         response.text!.replaceAll('json', '').replaceAll("```", '').trim();
@@ -90,7 +94,11 @@ Er hatte sie vor zwei Wochen in dieser Bar getroffen. Sie hatte blonde, wallende
               'theme': Schema.string(),
               'translate': Schema.array(items: Schema.string()),
               'text': Schema.array(items: Schema.string()),
-            })));
+            }, requiredProperties: [
+              "theme",
+              "translate",
+              "text"
+            ])));
 
     var jsonString =
         response.text!.replaceAll('json', '').replaceAll("```", '').trim();
