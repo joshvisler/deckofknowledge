@@ -17,10 +17,14 @@ class GeminiRepository {
   Future<WordGeneratedModel> generateCard(
       String word, String languageFrom, String languageTo) async {
     final prompt =
-        '''I want learn $languageFrom word "$word". And translate to $languageTo
-input: I want learn German word "word"
-output:{"word": "Angaben", "translate": "information, details, specifications", "description": ["Plural noun for 'Angabe'", "Refers to factual data or information provided in a form or application", "Can also refer to statements or declarations made in a formal context"], "tags": ["noun", "plural"], "examples": ["Bitte geben Sie Ihre persönlichen Angaben an.", "Die Angaben auf dem Formular sind unvollständig.", "Die technischen Angaben des Produkts sind beeindruckend."], "context": ["Commonly used in forms, applications, and official documents to request information."
-"Can also be used in everyday conversations to refer to facts or details."]}''';
+        '''I am learning new word in $languageFrom language. My native language is $languageTo.
+New word is $word. To learn new word I need:
+1. Translate word to $languageTo
+2. Context which describe meaning of the word
+3. Describe contexts where this word can be used and translate each context to $languageTo
+4. 10-15 Examples of using $word and translate every example to my native language. For example "sentence" - "Translate of sentence"
+5. Tags is - part of sentence
+Remember my native language is $languageTo''';
     final content = [Content.text(prompt)];
     final response = await _model.generateContent(content,
         generationConfig: GenerationConfig(

@@ -82,20 +82,31 @@ class CardsOverviewView extends StatelessWidget {
               return const SizedBox();
             } else {
               return Column(children: [
-                IconButton(
-                  icon: const Icon(Icons.download),
-                  tooltip: 'Export deck',
-                  onPressed: () => context
-                      .read<CardsOverviewBloc>()
-                      .add(ExportCardsFile(state.cards)),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.upload),
-                  tooltip: 'Export deck',
-                  onPressed: () => context
-                      .read<CardsOverviewBloc>()
-                      .add(const RestoreCardsFromFile()),
-                ),
+                Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(children: [
+                  IconButton(
+                    icon: const Icon(Icons.download),
+                    tooltip: 'Export deck',
+                    onPressed: () => context
+                        .read<CardsOverviewBloc>()
+                        .add(ExportCardsFile(state.cards)),
+                  ),
+                  Text('Download')
+                ]),
+                Row(children: [
+                  IconButton(
+                    icon: const Icon(Icons.upload),
+                    tooltip: 'Export deck',
+                    onPressed: () => context
+                        .read<CardsOverviewBloc>()
+                        .add(const RestoreCardsFromFile()),
+                  ),
+                  Text('Import')
+                ]),
+              ],
+            ),
                 Center(
                   child: TextButton(
                     onPressed: () => showDialog<String>(
